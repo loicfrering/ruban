@@ -7,7 +7,7 @@
   var Presentation = function() {
     this.$presentation = $('.presentation');
     this.$current      = $('section').first();
-    this.i             = 0;
+    this.y             = 0;
 
     this.$presentation.css('transition-duration', '1s');
     this.bind();
@@ -36,7 +36,8 @@
   Presentation.prototype.prev = function() {
     $prev = this.$current.prev('section');
     if ($prev.length) {
-      $('.presentation').css('transform', 'translateY(-' + (--this.i)*100 + '%)');
+      this.y = this.y - $prev.outerHeight();
+      $('.presentation').css('transform', 'translateY(-' + this.y + 'px)');
       this.$current = $prev;
     }
   };
@@ -44,7 +45,8 @@
   Presentation.prototype.next = function() {
     $next = this.$current.next('section');
     if ($next.length) {
-      $('.presentation').css('transform', 'translateY(-' + (++this.i)*100 + '%)');
+      this.y = this.y + this.$current.outerHeight();
+      $('.presentation').css('transform', 'translateY(-' + this.y + 'px)');
       this.$current = $next;
     }
   };
