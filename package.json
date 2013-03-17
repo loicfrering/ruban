@@ -1,0 +1,17 @@
+{
+  "name": "mixit",
+  "version": "0.1.0",
+  "description": "Backbone, Ember et Angular sont dans un bateau...",
+  "main": "index.html",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": "",
+  "author": "Loïc Frering <loic.frering@gmail.com>",
+  "license": "MIT",
+  "devDependencies": {
+    "grunt": "~0.4.1",
+    "grunt-contrib-coffee": "~0.6.0",
+    "grunt-contrib-watch": "~0.3.1"
+  }
+}
