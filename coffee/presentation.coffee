@@ -10,11 +10,16 @@ class Presentation
 
   bind: ->
     @bindKeys()
+    @bindGestures()
     @bindResize()
 
   bindKeys: ->
     key('right, down, space, return', @next)
     key('left, up, backspace', @prev)
+
+  bindGestures: ->
+    Hammer(document).on('swipeleft swipeup', @next)
+    Hammer(document).on('swiperight swipedown', @prev)
 
   bindResize: ->
     $(window).resize(@resize)
