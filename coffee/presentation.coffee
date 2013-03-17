@@ -38,7 +38,7 @@ class Presentation
   next: =>
     $next = @$current.next('section')
     if $next.length
-      @y += $next.outerHeight()
+      @y += @$current.outerHeight()
       $('.presentation').css('transform', "translateY(-#{@y}px)")
       @$current = $next
 
