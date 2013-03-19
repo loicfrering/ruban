@@ -25,8 +25,20 @@ class Presentation
     $(window).resize(@resize)
 
   resize: =>
-    min = Math.min($(window).width(), $(window).height())
-    $('section').css('font-size', "#{min * 0.4}%")
+    [width, height] = [$(window).width(), $(window).height()]
+    if width > height
+      min = height
+      paddingV = '20px'
+      paddingH = "#{(width - 1.3*height)/2}px"
+    else
+      min = width
+      paddingH = '20px'
+      paddingV = "#{(height - width/1.3)/2}px"
+
+    $('section').css(
+      'font-size': "#{min * 0.4}%"
+      'padding':   "#{paddingV} #{paddingH}"
+    )
 
   prev: =>
     $prev = @$current.prev('section')

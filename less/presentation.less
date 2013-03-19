@@ -14,15 +14,16 @@ section {
        box-sizing: border-box;
   height: 100%;
   width: 100%;
-  padding: 4em;
+
+  > *:only-child {
+    display: table-cell;
+    vertical-align: middle;
+  }
 
   h1 {
     margin-top: 0;
 
     &:only-child {
-      display: table-cell;
-      height: 100%;
-      vertical-align: middle;
       text-align: center;
     }
   }
@@ -37,19 +38,16 @@ section {
 .backbone {
   background: #0071B5;
   color: #FFF;
-  /*border: solid 0.2em #002A41;*/
 }
 
 .ember {
   background: #F23818;
   color: #F6ECE8;
-  /*border: solid 0.2em #F6ECE8;*/
 }
 
 .angular {
   background: #DD1B16;
   color: #F2F2F2;
-  /*border: solid 0.2em #B3B3B3;*/
 }
 
 img {
