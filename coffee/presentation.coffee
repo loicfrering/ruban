@@ -7,11 +7,13 @@ class Presentation
     @$presentation.css('transition-duration', '1s')
     @bind()
     @resize()
+    @checkHash()
 
   bind: ->
     @bindKeys()
     @bindGestures()
     @bindResize()
+    @bindHashChange()
 
   bindKeys: ->
     key('right, down, space, return', @next)
@@ -22,9 +24,15 @@ class Presentation
     Hammer(document).on('swiperight swipedown', @prev)
 
   bindResize: ->
-    $(window).resize(@resize)
+    $(window).resize(=>
+      @resize()
+      @checkHash()
+    )
 
-  resize: =>
+  bindHashChange: ->
+    $(window).on('hashchange', @checkHash)
+
+  resize: ->
     [width, height] = [$(window).width(), $(window).height()]
     if width > height
       min = height
@@ -40,6 +48,11 @@ class Presentation
       'padding':   "#{paddingV} #{paddingH}"
     )
 
+  checkHash: =>
+    hash = window.location.hash
+    slide = hash.substr(2)
+    @go(slide) if slide
+
   prev: =>
     $prev = @$current.prev('section')
     @go($prev)
@@ -54,6 +67,7 @@ class Presentation
       $section = $('section').slice(parseInt(slide) - 1).first()
 
     if $section.length
+      window.location.hash = "/#{$section.attr('id') || $section.index() + 1}"
       y = $section.prevAll().map(->
         $(@).outerHeight()
       ).get().reduce((memo, height) ->
