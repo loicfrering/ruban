@@ -42,16 +42,24 @@ class Presentation
 
   prev: =>
     $prev = @$current.prev('section')
-    if $prev.length
-      @y -= $prev.outerHeight()
-      $('.presentation').css('transform', "translateY(-#{@y}px)")
-      @$current = $prev
+    @go($prev)
 
   next: =>
     $next = @$current.next('section')
-    if $next.length
-      @y += @$current.outerHeight()
-      $('.presentation').css('transform', "translateY(-#{@y}px)")
-      @$current = $next
+    @go($next)
 
-presentation = new Presentation()
+  go: (slide = 1) ->
+    $section = if (slide instanceof $) then slide else $("##{slide}")
+    if $section.length is 0
+      $section = $('section').slice(parseInt(slide) - 1).first()
+
+    if $section.length
+      y = $section.prevAll().map(->
+        $(@).outerHeight()
+      ).get().reduce((memo, height) ->
+        memo + height
+      , 0)
+      $('.presentation').css('transform', "translateY(-#{y}px)")
+      @$current = $section
+
+window.presentation = new Presentation()
