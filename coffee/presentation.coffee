@@ -8,6 +8,7 @@ class Presentation
     @bind()
     @resize()
     @checkHash()
+    @highlight()
 
   bind: ->
     @bindKeys()
@@ -52,6 +53,9 @@ class Presentation
     hash = window.location.hash
     slide = hash.substr(2)
     @go(slide) if slide
+
+  highlight: ->
+    hljs.initHighlightingOnLoad()
 
   prev: =>
     $prev = @$current.prev('section')
