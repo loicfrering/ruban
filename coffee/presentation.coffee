@@ -17,8 +17,8 @@ class Presentation
     @bindHashChange()
 
   bindKeys: ->
-    key('right, down, space, return', @next)
-    key('left, up, backspace', @prev)
+    key('right, down, space, return, j, l', @next)
+    key('left, up, backspace, k, h', @prev)
 
   bindGestures: ->
     Hammer(document).on('swipeleft swipeup', @next)
@@ -68,7 +68,7 @@ class Presentation
   go: (slide = 1) ->
     $section = if (slide instanceof $) then slide else $("##{slide}")
     if $section.length is 0
-      $section = $('section').slice(parseInt(slide) - 1).first()
+      $section = $('section').eq(parseInt(slide) - 1)
 
     if $section.length
       window.location.hash = "/#{$section.attr('id') || $section.index() + 1}"
