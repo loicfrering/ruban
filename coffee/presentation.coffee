@@ -58,12 +58,48 @@ class Presentation
     hljs.initHighlightingOnLoad()
 
   prev: =>
+    if @hasSteps()
+      @prevStep()
+    else
+      @prevSlide()
+
+  prevSlide: ->
     $prev = @$current.prev('section')
     @go($prev)
 
+  prevStep: ->
+    $prev = @$steps.filter(':visible').last()
+    if $prev.length
+      $prev.fadeOut()
+    else
+      @prevSlide()
+
   next: =>
+    if @hasSteps()
+      @nextStep()
+    else
+      @nextSlide()
+
+  nextSlide: ->
     $next = @$current.next('section')
     @go($next)
+
+  nextStep: ->
+    $next = @$steps.filter(':hidden').first()
+    if $next.length
+      $next.fadeIn()
+    else
+      @nextSlide()
+
+  checkSteps: ($section) ->
+    @$steps = $section.find('.steps').children()
+    unless @$steps.length
+      @$steps = $section.find('.step')
+
+    @$steps.hide()
+
+  hasSteps: ->
+    @$steps? and @$steps.length isnt 0
 
   go: (slide = 1) ->
     $section = if (slide instanceof $) then slide else $("##{slide}")
@@ -71,6 +107,7 @@ class Presentation
       $section = $('section').eq(parseInt(slide) - 1)
 
     if $section.length
+      @checkSteps($section)
       window.location.hash = "/#{$section.attr('id') || $section.index() + 1}"
       y = $section.prevAll().map(->
         $(@).outerHeight()
