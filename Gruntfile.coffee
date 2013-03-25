@@ -5,12 +5,22 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON('package.json')
     coffee:
       compile:
-        files:
-          'js/presentation.js': 'coffee/presentation.coffee'
+        files: [
+          expand: true
+          cwd:    'coffee/'
+          src:    '*.coffee'
+          dest:   'js/'
+          ext:    '.js'
+        ]
     less:
       compile:
-        files:
-          'css/presentation.css': 'less/presentation.less'
+        files: [
+          expand: true
+          cwd:    'less/'
+          src:    '*.less'
+          dest:   'css/'
+          ext:    '.css'
+        ]
     watch:
       coffee:
         files: 'coffee/presentation.coffee'

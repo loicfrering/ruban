@@ -80,4 +80,5 @@ class Presentation
       $('.presentation').css('transform', "translateY(-#{y}px)")
       @$current = $section
 
-window.presentation = new Presentation()
+
+window.Presentation = Presentation
