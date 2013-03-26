@@ -115,6 +115,9 @@ class Presentation
         memo + height
       , 0)
       $('.presentation').css('transform', "translateY(-#{y}px)")
+
+      @$current.removeClass('current')
+      $section.addClass('current').trigger('current')
       @$current = $section
 
 
