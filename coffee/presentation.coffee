@@ -27,7 +27,7 @@ class Presentation
   bindResize: ->
     $(window).resize(=>
       @resize()
-      @checkHash()
+      @go(@$current)
     )
 
   bindHashChange: ->
@@ -52,7 +52,8 @@ class Presentation
   checkHash: =>
     hash = window.location.hash
     slide = hash.substr(2)
-    @go(slide) if slide
+    $section = @find(slide)
+    @go($section) unless $section.is(@$current)
 
   highlight: ->
     hljs.initHighlightingOnLoad()
