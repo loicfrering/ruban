@@ -107,10 +107,17 @@ class Presentation
   hasSteps: ->
     @$steps? and @$steps.length isnt 0
 
+  find: (slide) ->
+    if slide instanceof $
+      slide
+    else
+      $section = $("##{slide}")
+      if $section.length is 0
+        $section = $('section').eq(parseInt(slide) - 1)
+      $section
+
   go: (slide = 1) ->
-    $section = if (slide instanceof $) then slide else $("##{slide}")
-    if $section.length is 0
-      $section = $('section').eq(parseInt(slide) - 1)
+    $section = @find(slide)
 
     if $section.length
       @checkSteps($section)
