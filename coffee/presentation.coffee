@@ -68,9 +68,13 @@ class Presentation
     @go($prev)
 
   prevStep: ->
-    $prev = @$steps.filter(':visible').last()
-    if $prev.length
-      $prev.fadeOut()
+    @$steps.eq(@index).removeClass('step').fadeOut()
+    $prev = @$steps.eq(--@index)
+    unless @index < -1
+      if $prev.is(':visible')
+        $prev.addClass('step').trigger('step')
+      else if @index > -1
+        @prevStep()
     else
       @prevSlide()
 
@@ -85,9 +89,10 @@ class Presentation
     @go($next)
 
   nextStep: ->
-    $next = @$steps.filter(':hidden').first()
+    @$steps.eq(@index).removeClass('step')
+    $next = @$steps.eq(++@index)
     if $next.length
-      $next.fadeIn()
+      $next.fadeIn().addClass('step').trigger('step')
     else
       @nextSlide()
 
@@ -96,6 +101,7 @@ class Presentation
     unless @$steps.length
       @$steps = $section.find('.step')
 
+    @index = -1
     @$steps.hide()
 
   hasSteps: ->
