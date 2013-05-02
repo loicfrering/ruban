@@ -13,6 +13,7 @@
     "keymaster": "latest",
     "hammerjs": "~1.0.3",
     "normalize-css": "~2.1.0",
-    "font-awesome": "~3.0.2"
+    "font-awesome": "~3.0.2",
+    "highlightjs": "~7.3.0"
   }
 }
