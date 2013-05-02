@@ -1,15 +1,21 @@
 class Ruban
-  constructor: ->
+  constructor: (@options = {}) ->
     @$sections = $('section').wrapAll('<div class="ruban"></div>')
     @$ruban    = $('.ruban')
     @$current  = @$sections.first()
     @y         = 0
 
-    @$ruban.css('transition-duration', '1s')
+    @initOptions()
+    @$ruban.css('transition-duration', @options.transitionDuration)
     @bind()
     @resize()
     @checkHash()
     @highlight()
+
+  initOptions: () ->
+    @options.ratio              ?= 4/3
+    @options.minPadding         ?= '0.4em'
+    @options.transitionDuration ?= '1s'
 
   bind: ->
     @bindKeys()
@@ -38,12 +44,12 @@ class Ruban
     [width, height] = [$(window).width(), $(window).height()]
     if width > height
       min = height
-      paddingV = '20px'
-      paddingH = "#{(width - 1.3*height)/2}px"
+      paddingV = @options.minPadding
+      paddingH = "#{(width - @options.ratio*height)/2}px"
     else
       min = width
-      paddingH = '20px'
-      paddingV = "#{(height - width/1.3)/2}px"
+      paddingH = @options.minPadding
+      paddingV = "#{(height - width/@options.ratio)/2}px"
 
     @$sections.css(
       'font-size': "#{min * 0.4}%"
