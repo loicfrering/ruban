@@ -1,38 +1,32 @@
 <!DOCTYPE html>
 <html>
 <head>
-  <title>Mix-IT</title>
+  <title>Ruban</title>
   <meta charset="utf-8" />
   <link rel="stylesheet" href="components/normalize-css/normalize.css" />
   <link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css" />
   <link rel="stylesheet" href="css/libs/tomorrow.min.css" />
-  <link rel="stylesheet" href="css/presentation.css" />
+  <link rel="stylesheet" href="css/ruban.css" />
   <link rel="stylesheet" href="css/mixit.css" />
 </head>
 
 <body>
-  <div class="presentation">
+  <div class="ruban">
     <section>
-      <h1>Backbone, Ember et Angular sont dans un bateau...</h1>
+      <h1>Ruban</h1>
     </section>
     <section>
-      <h1>Loïc Frering</h1>
-      <ul>
-        <li><i class="icon-map-marker"></i> Lyon, France</li>
-        <li><i class="icon-building"></i>   <a href="http://atosworldline.net" title="Atos Worldline">Atos Worldline</a></li>
-        <li><i class="icon-twitter"></i>    <a href="https://twitter.com/loicfrering" title="@loicfrering sur Twitter">@loicfrering</a></li>
-        <li><i class="icon-github"></i>     <a href="https://github.com/loicfrering" title="@loicfrering sur GitHub">@loicfrering</a></li>
-        <li><i class="icon-envelope"></i>   <a href="mailto:loic.frering@gmail.com" title="loic.frering@gmail.com">loic.frering@gmail.com</a></li>
-      </ul>
+      <h1>Your slides parading on a ruban!</h1>
     </section>
-    <section class="backbone">
-      <h1>Backbone</h1>
-    </section>
-    <section class="ember">
-      <h1>Ember</h1>
-    </section>
-    <section class="angular">
-      <h1>Angular</h1>
+    <section>
+<pre style="text-align: center">
+|  |
+|  |
+|  |
+[|  |]
+|  |
+|  |
+</pre>
     </section>
   </div>
 
@@ -40,6 +34,9 @@
   <script src="components/keymaster/keymaster.min.js"></script>
   <script src="components/hammerjs/dist/hammer.min.js"></script>
   <script src="js/libs/highlight.min.js"></script>
-  <script src="js/presentation.js"></script>
+  <script src="js/ruban.js"></script>
+  <script>
+    new Ruban();
+  </script>
 </body>
 </html>

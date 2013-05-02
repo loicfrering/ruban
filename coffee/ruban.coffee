@@ -1,10 +1,10 @@
-class Presentation
+class Ruban
   constructor: ->
-    @$presentation = $('.presentation')
-    @$current      = $('section').first()
-    @y             = 0
+    @$ruban   = $('.ruban')
+    @$current = $('section').first()
+    @y        = 0
 
-    @$presentation.css('transition-duration', '1s')
+    @$ruban.css('transition-duration', '1s')
     @bind()
     @resize()
     @checkHash()
@@ -128,11 +128,11 @@ class Presentation
       ).get().reduce((memo, height) ->
         memo + height
       , 0)
-      $('.presentation').css('transform', "translateY(-#{y}px)")
+      @$ruban.css('transform', "translateY(-#{y}px)")
 
       @$current.removeClass('current')
       $section.addClass('current').trigger('current')
       @$current = $section
 
 
-window.Presentation = Presentation
+window.Ruban = Ruban

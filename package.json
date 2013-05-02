@@ -1,8 +1,8 @@
 {
-  "name": "mixit",
+  "name": "ruban",
   "author": "Loïc Frering <loic.frering@gmail.com>",
   "version": "0.1.0",
-  "description": "Backbone, Ember et Angular sont dans un bateau...",
+  "description": "A simple HTML5 based presentation framework.",
   "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

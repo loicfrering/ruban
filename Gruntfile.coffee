@@ -23,10 +23,10 @@ module.exports = (grunt) ->
         ]
     watch:
       coffee:
-        files: 'coffee/presentation.coffee'
+        files: 'coffee/ruban.coffee'
         tasks: 'coffee'
       less:
-        files: 'less/presentation.less'
+        files: 'less/ruban.less'
         tasks: 'less'
   )
 
