@@ -1,8 +1,9 @@
 class Ruban
   constructor: ->
-    @$ruban   = $('.ruban')
-    @$current = $('section').first()
-    @y        = 0
+    @$sections = $('section').wrapAll('<div class="ruban"></div>')
+    @$ruban    = $('.ruban')
+    @$current  = @$sections.first()
+    @y         = 0
 
     @$ruban.css('transition-duration', '1s')
     @bind()
@@ -44,7 +45,7 @@ class Ruban
       paddingH = '20px'
       paddingV = "#{(height - width/1.3)/2}px"
 
-    $('section').css(
+    @$sections.css(
       'font-size': "#{min * 0.4}%"
       'padding':   "#{paddingV} #{paddingH}"
     )
@@ -114,7 +115,7 @@ class Ruban
     else
       $section = $("##{slide}")
       if $section.length is 0
-        $section = $('section').eq(parseInt(slide) - 1)
+        $section = @$sections.eq(parseInt(slide) - 1)
       $section
 
   go: (slide = 1) ->
