@@ -45,16 +45,31 @@ class Ruban
     if width > height
       min = height
       paddingV = @options.minPadding
+      @$sections.css(
+        'font-size':      "#{min * 0.4}%"
+        'padding-top':    paddingV,
+        'padding-bottom': paddingV
+      )
+      height = @$current.height()
       paddingH = "#{(width - @options.ratio*height)/2}px"
+      @$sections.css(
+        'padding-left':  paddingH
+        'padding-right': paddingH
+      )
     else
       min = width
       paddingH = @options.minPadding
+      @$sections.css(
+        'font-size':      "#{min * 0.4}%"
+        'padding-left':  paddingH,
+        'padding-right': paddingH
+      )
+      width = @$current.width()
       paddingV = "#{(height - width/@options.ratio)/2}px"
-
-    @$sections.css(
-      'font-size': "#{min * 0.4}%"
-      'padding':   "#{paddingV} #{paddingH}"
-    )
+      @$sections.css(
+        'padding-top':    paddingV,
+        'padding-bottom': paddingV
+      )
 
   checkHash: =>
     hash = window.location.hash
