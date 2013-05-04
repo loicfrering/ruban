@@ -1,16 +1,13 @@
 class Ruban
   constructor: (@options = {}) ->
-    @$sections = $('section').wrapAll('<div class="ruban"></div>')
-    @$ruban    = $('.ruban')
-    @$current  = @$sections.first()
-    @y         = 0
-
     @initOptions()
-    @$ruban.css('transition-duration', @options.transitionDuration)
-    @bind()
-    @resize()
+    @$sections = $('section').wrapAll('<div class="ruban"></div>')
+    @$ruban    = $('.ruban').css('transition-duration', @options.transitionDuration)
+
     @checkHash()
     @highlight()
+    @resize()
+    @bind()
 
   initOptions: () ->
     @options.ratio              ?= 4/3
@@ -34,7 +31,7 @@ class Ruban
   bindResize: ->
     $(window).resize(=>
       @resize()
-      @go(@$current)
+      @go(@$current, force: true)
     )
 
   bindHashChange: ->
@@ -73,9 +70,8 @@ class Ruban
 
   checkHash: =>
     hash = window.location.hash
-    slide = hash.substr(2)
-    $section = @find(slide)
-    @go($section) unless $section.is(@$current)
+    slide = hash.substr(2) || 1
+    @go(slide)
 
   highlight: ->
     hljs.initHighlightingOnLoad()
@@ -139,10 +135,10 @@ class Ruban
         $section = @$sections.eq(parseInt(slide) - 1)
       $section
 
-  go: (slide = 1) ->
+  go: (slide = 1, options = {}) ->
     $section = @find(slide)
 
-    if $section.length
+    if $section.length and (options.force or not $section.is(@$current))
       @checkSteps($section)
       window.location.hash = "/#{$section.attr('id') || $section.index() + 1}"
       y = $section.prevAll().map(->
@@ -152,8 +148,8 @@ class Ruban
       , 0)
       @$ruban.css('transform', "translateY(-#{y}px)")
 
-      @$current.removeClass('current')
-      $section.addClass('current').trigger('current')
+      @$current.removeClass('active').trigger('inactive') if @$current?
+      $section.addClass('active').trigger('active')
       @$current = $section
 
 
