@@ -38,9 +38,9 @@ class Ruban
     $(window).on('hashchange', @checkHash)
 
   resize: ->
-    [width, height] = [$(window).width(), $(window).height()]
-    if width > height
-      min = height
+    [outerWidth, outerHeight] = [$(window).width(), $(window).height()]
+    if outerWidth > @options.ratio * outerHeight
+      min = outerHeight
       paddingV = @options.minPadding
       @$sections.css(
         'font-size':      "#{min * 0.4}%"
@@ -48,13 +48,14 @@ class Ruban
         'padding-bottom': paddingV
       )
       height = @$current.height()
-      paddingH = "#{(width - @options.ratio*height)/2}px"
+      width = @options.ratio * height
+      paddingH = "#{(outerWidth - width)/2}px"
       @$sections.css(
         'padding-left':  paddingH
         'padding-right': paddingH
       )
     else
-      min = width
+      min = outerWidth / @options.ratio
       paddingH = @options.minPadding
       @$sections.css(
         'font-size':      "#{min * 0.4}%"
@@ -62,7 +63,8 @@ class Ruban
         'padding-right': paddingH
       )
       width = @$current.width()
-      paddingV = "#{(height - width/@options.ratio)/2}px"
+      height = width / @options.ratio
+      paddingV = "#{(height - height)/2}px"
       @$sections.css(
         'padding-top':    paddingV,
         'padding-bottom': paddingV
