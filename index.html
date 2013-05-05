@@ -7,24 +7,89 @@
   <link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css" />
   <link rel="stylesheet" href="components/highlightjs/styles/tomorrow.css" />
   <link rel="stylesheet" href="css/ruban.css" />
+  <style>
+    section {
+      border-left: 1em solid #434343;
+      border-right: 1em solid #434343;
+    }
+
+    pre code {
+      background-color: inherit;
+    }
+
+    pre .xml .javascript {
+      opacity: 1;
+    }
+  </style>
 </head>
 
 <body>
   <section>
-    <h1>Ruban</h1>
+<pre style="text-align: center; font-family: 'Source Code Pro';">
+| R |
+| U |
+| B |
+| A |
+| N |
+</pre>
   </section>
   <section>
     <h1>Your slides parading on a ruban!</h1>
   </section>
   <section>
-<pre style="text-align: center">
-|  |
-|  |
-|  |
-[|  |]
-|  |
-|  |
-</pre>
+    <h1>Installation</h1>
+  </section>
+  <section>
+    <h1>With Bower</h1>
+    <p><code>$ bower install ruban --save</code></p>
+  </section>
+  <section>
+    <h1>Getting started</h1>
+  </section>
+  <section>
+<pre><code style="font-size: 34%;">&lt;!DOCTYPE html&gt;
+&lt;html&gt;
+&lt;head&gt;
+  &lt;title&gt;I &amp;lt;3 Ruban&lt;/title&gt;
+  &lt;meta charset="utf-8" /&gt;
+  &lt;link rel="stylesheet" href="components/normalize-css/normalize.css" /&gt;
+  &lt;link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css" /&gt;
+  &lt;link rel="stylesheet" href="components/highlightjs/styles/tomorrow.css" /&gt;
+  &lt;link rel="stylesheet" href="components/ruban/dist/ruban.min.css" /&gt;
+&lt;/head&gt;
+
+&lt;body&gt;
+  <strong>&lt;section&gt;</strong>
+    <strong>&lt;h1&gt;My Awesome Presentation&lt;/h1&gt;</strong>
+  <strong>&lt;/section&gt;</strong>
+
+  &lt;script src="components/jquery/jquery.min.js"&gt;&lt;/script&gt;
+  &lt;script src="components/keymaster/keymaster.min.js"&gt;&lt;/script&gt;
+  &lt;script src="components/hammerjs/dist/hammer.min.js"&gt;&lt;/script&gt;
+  &lt;script src="components/highlightjs/highlight.pack.js"&gt;&lt;/script&gt;
+  &lt;script src="components/ruban/dist/ruban.min.js"&gt;&lt;/script&gt;
+  &lt;script&gt;
+    <strong>new Ruban();</strong>
+  &lt;/script&gt;
+&lt;/body&gt;
+&lt;/html&gt;
+</code></pre>
+  </section>
+  <section>
+    <h1>Examples</h1>
+    <ul>
+      <li>
+        <a href="http://loicfrering.github.io/ruban/" title="This documentation">This documentation</a>
+        (<a href="https://github.com/loicfrering/ruban/blob/master/index.html" title="Source on GitHub">src</a>)
+      </li>
+      <li>
+        <a href="http://loicfrering.github.io/mixit13/" title="Backbone, Ember et Angular sont dans un bateau...">Backbone, Ember et Angular</a>
+        (<a href="https://github.com/loicfrering/mixit13" title="Source on GitHub">src</a>)
+      </li>
+    </ul>
+  </section>
+  <section>
+    <h1><a href="https://github.com/loicfrering/ruban" title="Fork me on GitHub">Fork me on GitHub!</a></h1>
   </section>
 
   <script src="components/jquery/jquery.min.js"></script>
@@ -33,6 +98,33 @@
   <script src="components/highlightjs/highlight.pack.js"></script>
   <script src="js/ruban.js"></script>
   <script>
+    function asciiRuban(current) {
+      var ruban = '';
+      for (var i = 0; i < 5; i++) {
+        if (i === current) {
+          ruban += '[| ' + 'RUBAN'[i] + ' |]';
+        } else {
+          ruban += '| ' + 'RUBAN'[i] + ' |';
+        }
+        ruban += '\n';
+      }
+      return ruban;
+    }
+
+    var timeoutId, i = 0;
+
+    $('section').first().on('active', function() {
+      var $pre = $(this).find('pre');
+      timeoutId = setInterval(function() {
+        var ruban = asciiRuban(i++ % 6);
+        $pre.html(ruban);
+      }, 1000);
+    });
+
+    $('section').first().on('inactive', function() {
+      clearInterval(timeoutId);
+    });
+
     var ruban = new Ruban();
   </script>
 </body>
