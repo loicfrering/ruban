@@ -2,17 +2,19 @@ class Ruban
   constructor: (@options = {}) ->
     @initOptions()
     @$sections = $('section').wrapAll('<div class="ruban"></div>')
-    @$ruban    = $('.ruban').css('transition-duration', @options.transitionDuration)
+    @$ruban    = $('.ruban')
 
     @checkHash()
     @highlight()
     @resize()
     @bind()
+    @$ruban.css('transition-duration', @options.transitionDuration)
 
   initOptions: () ->
     @options.ratio              ?= 4/3
     @options.minPadding         ?= '0.4em'
     @options.transitionDuration ?= '1s'
+    @options.pagination         ?= false
 
   bind: ->
     @bindKeys()
@@ -42,8 +44,8 @@ class Ruban
     if outerWidth > @options.ratio * outerHeight
       min = outerHeight
       paddingV = @options.minPadding
+      @$ruban.parent().css('font-size', "#{min * 0.4}%")
       @$sections.css(
-        'font-size':      "#{min * 0.4}%"
         'padding-top':    paddingV,
         'padding-bottom': paddingV
       )
@@ -57,14 +59,14 @@ class Ruban
     else
       min = outerWidth / @options.ratio
       paddingH = @options.minPadding
+      @$ruban.parent().css('font-size', "#{min * 0.4}%")
       @$sections.css(
-        'font-size':      "#{min * 0.4}%"
         'padding-left':  paddingH,
         'padding-right': paddingH
       )
       width = @$current.width()
       height = width / @options.ratio
-      paddingV = "#{(height - height)/2}px"
+      paddingV = "#{(outerHeight - height)/2}px"
       @$sections.css(
         'padding-top':    paddingV,
         'padding-bottom': paddingV
@@ -153,6 +155,16 @@ class Ruban
       @$current.removeClass('active').trigger('inactive') if @$current?
       $section.addClass('active').trigger('active')
       @$current = $section
+
+      @pagination() if @options.pagination
+
+  pagination: ->
+    unless @$pagination
+      @$ruban.parent().append('<footer class="pagination"></footer>')
+      @$pagination = $('.pagination')
+      @total = @$sections.length
+
+    @$pagination.html("#{@$current.index() + 1}/#{@total}")
 
 
 window.Ruban = Ruban
