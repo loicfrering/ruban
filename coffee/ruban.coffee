@@ -64,7 +64,7 @@ class Ruban
       )
       width = @$current.width()
       height = width / @options.ratio
-      paddingV = "#{(height - height)/2}px"
+      paddingV = "#{(outerHeight - height)/2}px"
       @$sections.css(
         'padding-top':    paddingV,
         'padding-bottom': paddingV
