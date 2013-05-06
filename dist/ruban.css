@@ -30,6 +30,12 @@ section h1 {
 section h1:only-child {
   text-align: center;
 }
+.pagination {
+  position: fixed;
+  right: 1em;
+  bottom: 0.6em;
+  font-size: 60%;
+}
 a {
   color: inherit;
   text-decoration: none;

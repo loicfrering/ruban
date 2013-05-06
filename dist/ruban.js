@@ -18,22 +18,26 @@
       };
       this.initOptions();
       this.$sections = $('section').wrapAll('<div class="ruban"></div>');
-      this.$ruban = $('.ruban').css('transition-duration', this.options.transitionDuration);
+      this.$ruban = $('.ruban');
       this.checkHash();
       this.highlight();
       this.resize();
       this.bind();
+      this.$ruban.css('transition-duration', this.options.transitionDuration);
     }
 
     Ruban.prototype.initOptions = function() {
-      var _base, _base1, _base2, _ref, _ref1, _ref2;
+      var _base, _base1, _base2, _base3, _ref, _ref1, _ref2, _ref3;
       if ((_ref = (_base = this.options).ratio) == null) {
         _base.ratio = 4 / 3;
       }
       if ((_ref1 = (_base1 = this.options).minPadding) == null) {
         _base1.minPadding = '0.4em';
       }
-      return (_ref2 = (_base2 = this.options).transitionDuration) != null ? _ref2 : _base2.transitionDuration = '1s';
+      if ((_ref2 = (_base2 = this.options).transitionDuration) == null) {
+        _base2.transitionDuration = '1s';
+      }
+      return (_ref3 = (_base3 = this.options).pagination) != null ? _ref3 : _base3.pagination = false;
     };
 
     Ruban.prototype.bind = function() {
@@ -73,8 +77,8 @@
       if (outerWidth > this.options.ratio * outerHeight) {
         min = outerHeight;
         paddingV = this.options.minPadding;
+        this.$ruban.parent().css('font-size', "" + (min * 0.4) + "%");
         this.$sections.css({
-          'font-size': "" + (min * 0.4) + "%",
           'padding-top': paddingV,
           'padding-bottom': paddingV
         });
@@ -88,14 +92,14 @@
       } else {
         min = outerWidth / this.options.ratio;
         paddingH = this.options.minPadding;
+        this.$ruban.parent().css('font-size', "" + (min * 0.4) + "%");
         this.$sections.css({
-          'font-size': "" + (min * 0.4) + "%",
           'padding-left': paddingH,
           'padding-right': paddingH
         });
         width = this.$current.width();
         height = width / this.options.ratio;
-        paddingV = "" + ((height - height) / 2) + "px";
+        paddingV = "" + ((outerHeight - height) / 2) + "px";
         return this.$sections.css({
           'padding-top': paddingV,
           'padding-bottom': paddingV
@@ -216,8 +220,20 @@
           this.$current.removeClass('active').trigger('inactive');
         }
         $section.addClass('active').trigger('active');
-        return this.$current = $section;
+        this.$current = $section;
+        if (this.options.pagination) {
+          return this.pagination();
+        }
       }
+    };
+
+    Ruban.prototype.pagination = function() {
+      if (!this.$pagination) {
+        this.$ruban.parent().append('<footer class="pagination"></footer>');
+        this.$pagination = $('.pagination');
+        this.total = this.$sections.length;
+      }
+      return this.$pagination.html("" + (this.$current.index() + 1) + "/" + this.total);
     };
 
     return Ruban;
