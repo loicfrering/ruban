@@ -4,6 +4,7 @@ class Ruban
     @$sections = $('section').wrapAll('<div class="ruban"></div>')
     @$ruban    = $('.ruban')
 
+    @toc()
     @checkHash()
     @highlight()
     @resize()
@@ -165,6 +166,23 @@ class Ruban
       @total = @$sections.length
 
     @$pagination.html("#{@$current.index() + 1}/#{@total}")
+
+  toc: ->
+    $toc = $('.toc')
+    if $toc.length
+      $ul = $('<ul/>')
+      $('section:not(.no-toc) > h1:only-child').each(->
+        $section = $(this).parent()
+        title = $(this).text()
+        $ul.append($('<li/>'))
+           .append($('<a/>',
+             href:  "#/#{$section.attr('id') || $section.index() + 1}"
+             title: title
+             text:  title
+           ))
+      )
+      $toc.append('<h1>Table of Contents</h1>')
+          .append($ul)
 
 
 window.Ruban = Ruban
