@@ -8,6 +8,22 @@ Documentation
 
 You'll find the documentation on a Ruban: http://loicfrering.github.io/ruban/.
 
+Changelog
+---------
+
+### 0.1.2
+
+* Table of Contents automatic generation.
+
+### 0.1.1
+
+* Support pagination.
+* Fix a resizing issue.
+
+### 0.1.0
+
+* Initial release.
+
 License
 -------
 
