@@ -1,7 +1,7 @@
 Ruban
 =====
 
-An simple framework for building nice HTML5 based presentations.
+A simple framework for building nice HTML5 based presentations.
 
 Documentation
 -------------
