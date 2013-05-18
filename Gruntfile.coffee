@@ -22,9 +22,11 @@ module.exports = (grunt) ->
       compile:
         files:
           'css/ruban.css': 'less/ruban.less'
+          'css/print.css': 'less/print.less'
       dist:
         files:
           'dist/ruban.css': 'less/ruban.less'
+          'dist/print.css': 'less/print.less'
     uglify:
       options:
         banner: '<%= meta.banner %>'
@@ -35,12 +37,13 @@ module.exports = (grunt) ->
       dist:
         files:
           'dist/ruban.min.css': 'dist/ruban.css'
+          'dist/print.min.css': 'dist/print.css'
     watch:
       coffee:
         files: 'coffee/ruban.coffee'
         tasks: 'coffee:compile'
       less:
-        files: 'less/ruban.less'
+        files: ['less/ruban.less','less/print.less']
         tasks: 'less:compile'
   )
 
