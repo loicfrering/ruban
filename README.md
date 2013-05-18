@@ -14,6 +14,8 @@ Changelog
 ### 0.1.2
 
 * Table of Contents automatic generation.
+* StyleSheet dedicated to print media.
+* Support adding extra details in <detail> tags.
 
 ### 0.1.1
 
