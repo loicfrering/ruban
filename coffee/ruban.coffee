@@ -3,6 +3,7 @@ class Ruban
     @initOptions()
     @$sections = $('section').wrapAll('<div class="ruban"></div>')
     @$ruban    = $('.ruban')
+    @$current  = @$sections.first()
 
     @toc()
     @checkHash()
