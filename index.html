@@ -4,9 +4,10 @@
   <title>Ruban</title>
   <meta charset="utf-8" />
   <link rel="stylesheet" href="components/normalize-css/normalize.css" />
-  <link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css" />
+  <link rel="stylesheet" href="components/font-awesome/build/assets/font-awesome/css/font-awesome.min.css" />
   <link rel="stylesheet" href="components/highlightjs/styles/tomorrow.css" />
   <link rel="stylesheet" href="dist/ruban.min.css" />
+  <link rel="stylesheet" href="dist/ruban-print.min.css" media="print" />
   <style>
     section {
       border-left: 1em solid #434343;
@@ -24,11 +25,15 @@
     pre .xml .javascript {
       opacity: 1;
     }
+
+    #examples ul {
+      padding-left: 0;
+    }
   </style>
 </head>
 
 <body>
-  <section>
+  <section id="ruban">
 <pre style="text-align: center; font-family: 'Source Code Pro';">
 | R |
 | U |
@@ -37,29 +42,32 @@
 | N |
 </pre>
   </section>
-  <section>
-    <h1>Your slides parading on a ruban!</h1>
+  <section id="parading-on-a-ruban" class="no-toc">
+    <h1>Your slides parading on a <strong>ruban</strong>!</h1>
   </section>
-  <section>
+  <section id="table-of-contents" class="toc">
+  </section>
+  <section id="installation">
     <h1>Installation</h1>
   </section>
-  <section>
+  <section id="installation-bower">
     <h1>With Bower</h1>
     <p><code>$ bower install ruban --save</code></p>
   </section>
-  <section>
+  <section id="getting-started">
     <h1>Getting started</h1>
   </section>
-  <section>
+  <section id="getting-started-html">
 <pre><code style="font-size: 34%;">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
   &lt;title&gt;I &amp;lt;3 Ruban&lt;/title&gt;
   &lt;meta charset="utf-8" /&gt;
   &lt;link rel="stylesheet" href="components/normalize-css/normalize.css" /&gt;
-  &lt;link rel="stylesheet" href="components/font-awesome/css/font-awesome.min.css" /&gt;
+  &lt;link rel="stylesheet" href="components/font-awesome/build/assets/font-awesome/css/font-awesome.min.css" /&gt;
   &lt;link rel="stylesheet" href="components/highlightjs/styles/tomorrow.css" /&gt;
   &lt;link rel="stylesheet" href="components/ruban/dist/ruban.min.css" /&gt;
+  &lt;link rel="stylesheet" href="components/ruban/dist/ruban-print.min.css" media="print" /&gt;
 &lt;/head&gt;
 
 &lt;body&gt;
@@ -79,20 +87,104 @@
 &lt;/html&gt;
 </code></pre>
   </section>
-  <section>
+  <section id="features">
+    <h1>Features</h1>
+  </section>
+  <section id="toc">
+    <h1>Table of Contents</h1>
+    <ul>
+      <li>Auto-generated Table of Contents</li>
+      <li>Selects sections with a h1 as unique child</li>
+      <li>Exclude sections with the no-toc class</li>
+    </ul>
+<pre style="margin-bottom: 0;"><code>&lt;section class="toc"&gt;
+&lt;/section&gt;
+&lt;section&gt;
+  &lt;h1&gt;First title&lt;/h1&gt;
+&lt;/section&gt;
+&lt;section&gt;
+  &lt;h1&gt;Second title&lt;/h1&gt;
+&lt;/section&gt;
+</code></pre>
+  </section>
+  <section id="bookmarkable-urls">
+    <h1>Bookmarkable URLs</h1>
+    <ul>
+      <li>Just add an id to the section!</li>
+    </ul>
+<pre><code>&lt;section id="about-dinosaurs"&gt;
+  &lt;h1&gt;About dinosaurs&lt;/h1&gt;
+&lt;/section&gt;
+</code></pre>
+  <section id="pagination">
+    <h1>Pagination</h1>
+    <ul>
+      <li>When will this boring presentation end?</li>
+    </ul>
+<pre><code class="javascript">new Ruban({
+  pagination: true
+});
+</code></pre>
+  </section>
+  <section id="steps">
+    <h1>Steps</h1>
+    <ul class="steps">
+      <li>Make your point</li>
+      <li>Step by step</li>
+<pre><code>&lt;section&gt;
+  &lt;h1&gt;Steps&lt;/h1&gt;
+  &lt;ul class="steps"&gt;
+    &lt;li&gt;Make your point&lt;/li&gt;
+    &lt;li&gt;Step by step&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/section&gt;
+</code></pre>
+      </li>
+    </ul>
+  </section>
+  <section id="details">
+    <h1>Details</h1>
+    <ul>
+      <li>
+        Add details &amp; speaker notes to your slides
+        <ul>
+          <li>Hidden on the Ruban</li>
+          <li>Displayed in the printed version</li>
+        </ul>
+      </li>
+    </ul>
+<pre><code>&lt;details open="open"&gt;
+  &lt;summary&gt;Notes&lt;/summary&gt;
+  &lt;p&gt;
+    You can write down your comments here.
+    They will be available in the printed version.
+  &lt;/p&gt;
+&lt;/details&gt;
+</code></pre>
+    <details open="open">
+      <summary>Notes</summary>
+      <p>You can write down your comments here. They will be available in the printed version.</p>
+    </details>
+  </section>
+  <section id="examples">
+    <h1>Examples</h1>
+  </section>
+  <section id="examples-list">
     <h1>Examples</h1>
     <ul>
       <li>
+        <i class="icon-asterisk"></i>
         <a href="http://loicfrering.github.io/ruban/" title="This documentation">This documentation</a>
         (<a href="https://github.com/loicfrering/ruban/blob/master/index.html" title="Source on GitHub">src</a>)
       </li>
       <li>
+        <i class="icon-asterisk"></i>
         <a href="http://loicfrering.github.io/mixit13/" title="Backbone, Ember et Angular sont dans un bateau...">Backbone, Ember et Angular</a>
         (<a href="https://github.com/loicfrering/mixit13" title="Source on GitHub">src</a>)
       </li>
     </ul>
   </section>
-  <section>
+  <section id="fork-me">
     <h1><a href="https://github.com/loicfrering/ruban" title="Fork me on GitHub">Fork me on GitHub!</a></h1>
   </section>
 
@@ -129,7 +221,9 @@
       clearInterval(timeoutId);
     });
 
-    var ruban = new Ruban();
+    var ruban = new Ruban({
+      pagination: true
+    });
   </script>
 </body>
 </html>

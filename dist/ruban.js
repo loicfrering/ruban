@@ -19,6 +19,8 @@
       this.initOptions();
       this.$sections = $('section').wrapAll('<div class="ruban"></div>');
       this.$ruban = $('.ruban');
+      this.$current = this.$sections.first();
+      this.toc();
       this.checkHash();
       this.highlight();
       this.resize();
@@ -234,6 +236,25 @@
         this.total = this.$sections.length;
       }
       return this.$pagination.html("" + (this.$current.index() + 1) + "/" + this.total);
+    };
+
+    Ruban.prototype.toc = function() {
+      var $toc, $ul;
+      $toc = $('.toc');
+      if ($toc.length) {
+        $ul = $('<ul/>');
+        $('section:not(.no-toc) > h1:only-child').each(function() {
+          var $section, title;
+          $section = $(this).parent();
+          title = $(this).text();
+          return $ul.append($('<li/>')).append($('<a/>', {
+            href: "#/" + ($section.attr('id') || $section.index() + 1),
+            title: title,
+            text: title
+          }));
+        });
+        return $toc.append('<h1>Table of Contents</h1>').append($ul);
+      }
     };
 
     return Ruban;
