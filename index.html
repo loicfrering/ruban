@@ -89,6 +89,58 @@
   <section id="features">
     <h1>Features</h1>
   </section>
+  <section id="toc">
+    <h1>Table of Contents</h1>
+    <ul>
+      <li>Auto-generated Table of Contents</li>
+      <li>Selects sections with a h1 as unique child</li>
+      <li>Exclude sections with the no-toc class</li>
+    </ul>
+<pre style="margin-bottom: 0;"><code>&lt;section class="toc"&gt;
+&lt;/section&gt;
+&lt;section&gt;
+  &lt;h1&gt;First title&lt;/h1&gt;
+&lt;/section&gt;
+&lt;section&gt;
+  &lt;h1&gt;Second title&lt;/h1&gt;
+&lt;/section&gt;
+</code></pre>
+  </section>
+  <section id="bookmarkable-urls">
+    <h1>Bookmarkable URLs</h1>
+    <ul>
+      <li>Just add an id to the section!</li>
+    </ul>
+<pre><code>&lt;section id="about-dinosaurs"&gt;
+  &lt;h1&gt;About dinosaurs&lt;/h1&gt;
+&lt;/section&gt;
+</code></pre>
+  <section id="pagination">
+    <h1>Pagination</h1>
+    <ul>
+      <li>When will this boring presentation end?</li>
+    </ul>
+<pre><code>new Ruban({
+  pagination: true
+});
+</code></pre>
+  </section>
+  <section id="steps">
+    <h1>Steps</h1>
+    <ul class="steps">
+      <li>Make your point</li>
+      <li>Step by step</li>
+<pre><code>&lt;section&gt;
+  &lt;h1&gt;Steps&lt;/h1&gt;
+  &lt;ul class="steps"&gt;
+    &lt;li&gt;Make your point&lt;/li&gt;
+    &lt;li&gt;Step by step&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/section&gt;
+</code></pre>
+      </li>
+    </ul>
+  </section>
   <section id="details">
     <h1>Details</h1>
     <ul>
@@ -100,10 +152,12 @@
         </ul>
       </li>
     </ul>
-<pre><code>
-&lt;details open="open"&gt;
+<pre><code>&lt;details open="open"&gt;
   &lt;summary&gt;Notes&lt;/summary&gt;
-  &lt;p&gt;You can write down your comments here. They will be available in the printed version.&lt;/p&gt;
+  &lt;p&gt;
+    You can write down your comments here.
+    They will be available in the printed version.
+  &lt;/p&gt;
 &lt;/details&gt;
 </code></pre>
     <details open="open">
@@ -166,7 +220,9 @@
       clearInterval(timeoutId);
     });
 
-    var ruban = new Ruban();
+    var ruban = new Ruban({
+      pagination: true
+    });
   </script>
 </body>
 </html>
