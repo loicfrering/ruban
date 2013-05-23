@@ -10,6 +10,7 @@ class Ruban
     @highlight()
     @resize()
     @bind()
+    @$ruban.css('transition-property', 'transform')
     @$ruban.css('transition-duration', @options.transitionDuration)
 
   initOptions: () ->
