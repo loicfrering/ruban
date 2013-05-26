@@ -3,9 +3,10 @@ class Ruban
     @initOptions()
     @$sections = $('section').wrapAll('<div class="ruban"></div>')
     @$ruban    = $('.ruban')
-    @$current  = @$sections.first()
 
     @toc()
+    @current(@$sections.first())
+    @pagination()
     @checkHash()
     @highlight()
     @resize()
@@ -77,8 +78,8 @@ class Ruban
 
   checkHash: =>
     hash = window.location.hash
-    slide = hash.substr(2) || 1
-    @go(slide)
+    if slide = hash.substr(2)
+      @go(slide)
 
   highlight: ->
     hljs.initHighlightingOnLoad()
@@ -147,27 +148,36 @@ class Ruban
 
     if $section.length and (options.force or not $section.is(@$current))
       @checkSteps($section)
-      window.location.hash = "/#{$section.attr('id') || $section.index() + 1}"
-      y = $section.prevAll().map(->
-        $(@).outerHeight()
-      ).get().reduce((memo, height) ->
-        memo + height
-      , 0)
-      @$ruban.css('transform', "translateY(-#{y}px)")
+      @navigate($section)
+      @translate($section)
+      @current($section)
+      @pagination()
 
-      @$current.removeClass('active').trigger('inactive') if @$current?
-      $section.addClass('active').trigger('active')
-      @$current = $section
+  navigate: ($section) ->
+    window.location.hash = "/#{$section.attr('id') || $section.index() + 1}"
 
-      @pagination() if @options.pagination
+  translate: ($section) ->
+    y = $section.prevAll().map(->
+      $(@).outerHeight()
+    ).get().reduce((memo, height) ->
+      memo + height
+    , 0)
+    @$ruban.css('transform', "translateY(-#{y}px)")
+
+
+  current: ($section) ->
+    @$current.removeClass('active').trigger('inactive') if @$current?
+    $section.addClass('active').trigger('active')
+    @$current = $section
 
   pagination: ->
-    unless @$pagination
-      @$ruban.parent().append('<footer class="pagination"></footer>')
-      @$pagination = $('.pagination')
-      @total = @$sections.length
+    if @options.pagination
+      unless @$pagination
+        @$ruban.parent().append('<footer class="pagination"></footer>')
+        @$pagination = $('.pagination')
+        @total = @$sections.length
 
-    @$pagination.html("#{@$current.index() + 1}/#{@total}")
+      @$pagination.html("#{@$current.index() + 1}/#{@total}")
 
   toc: ->
     $toc = $('.toc')
