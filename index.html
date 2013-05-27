@@ -156,6 +156,24 @@
 });
 </code></pre>
   </section>
+  <section id="events">
+    <h1>Events</h1>
+    <ul>
+      <li>Add some dynamic behavior to your slides!</li>
+      <li>Listen for active &amp; inactive events</li>
+    </ul>
+<pre><code class="javascript">$('#events').on({
+  active: function() {
+    $(this).find('h1').stop()
+           .animate({marginLeft: '2em'}, 2000);
+  },
+  inactive:function() {
+    $(this).find('h1').stop()
+           .animate({marginLeft: 0});
+  }
+});
+</code></pre>
+  </section>
   <section id="details">
     <h1>Details</h1>
     <ul>
@@ -223,17 +241,28 @@
 
     var timeoutId, i = 0;
 
-    $('section').first().on('active', function() {
-      var $pre = $(this).find('pre');
-      timeoutId = setInterval(function() {
-        var ruban = asciiRuban(i++ % 6);
-        $pre.html(ruban);
-      }, 1000);
+    $('#ruban').on({
+      active: function() {
+        var $pre = $(this).find('pre');
+        timeoutId = setInterval(function() {
+          var ruban = asciiRuban(i++ % 6);
+          $pre.html(ruban);
+        }, 1000);
+      },
+      inactive: function() {
+        clearInterval(timeoutId);
+      }
     });
 
-    $('section').first().on('inactive', function() {
-      clearInterval(timeoutId);
+    $('#events').on({
+      active: function() {
+        $(this).find('h1').stop().animate({marginLeft: '2em'}, 2000);
+      },
+      inactive:function() {
+        $(this).find('h1').stop().animate({marginLeft: 0});
+      }
     });
+
 
     var ruban = new Ruban({
       pagination: true
