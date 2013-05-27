@@ -1,4 +1,4 @@
 node_modules
 components
-js
-css
+js/*-dev.js
+css/*-dev.css

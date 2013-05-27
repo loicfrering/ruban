@@ -14,30 +14,30 @@ module.exports = (grunt) ->
     coffee:
       compile:
         files:
-          'js/ruban.js': 'coffee/ruban.coffee'
+          'js/ruban-dev.js': 'coffee/ruban.coffee'
       dist:
         files:
-          'dist/ruban.js': 'coffee/ruban.coffee'
+          'js/ruban.js': 'coffee/ruban.coffee'
     less:
       compile:
         files:
-          'css/ruban.css': 'less/ruban.less'
-          'css/ruban-print.css': 'less/ruban-print.less'
+          'css/ruban-dev.css': 'less/ruban.less'
+          'css/ruban-print-dev.css': 'less/ruban-print.less'
       dist:
         files:
-          'dist/ruban.css': 'less/ruban.less'
-          'dist/ruban-print.css': 'less/ruban-print.less'
+          'css/ruban.css': 'less/ruban.less'
+          'css/ruban-print.css': 'less/ruban-print.less'
     uglify:
       options:
         banner: '<%= meta.banner %>'
       dist:
         files:
-          'dist/ruban.min.js': 'dist/ruban.js'
+          'js/ruban.min.js': 'js/ruban.js'
     cssmin:
       dist:
         files:
-          'dist/ruban.min.css': 'dist/ruban.css'
-          'dist/ruban-print.min.css': 'dist/ruban-print.css'
+          'css/ruban.min.css': 'css/ruban.css'
+          'css/ruban-print.min.css': 'css/ruban-print.css'
     watch:
       coffee:
         files: 'coffee/ruban.coffee'
