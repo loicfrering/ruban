@@ -6,8 +6,8 @@
   <link rel="stylesheet" href="components/normalize-css/normalize.css" />
   <link rel="stylesheet" href="components/font-awesome/build/assets/font-awesome/css/font-awesome.min.css" />
   <link rel="stylesheet" href="components/highlightjs/styles/tomorrow.css" />
-  <link rel="stylesheet" href="dist/ruban.min.css" />
-  <link rel="stylesheet" href="dist/ruban-print.min.css" media="print" />
+  <link rel="stylesheet" href="css/ruban.min.css" />
+  <link rel="stylesheet" href="css/ruban-print.min.css" media="print" />
   <style>
     section {
       border-left: 1em solid #434343;
@@ -116,6 +116,7 @@
   &lt;h1&gt;About dinosaurs&lt;/h1&gt;
 &lt;/section&gt;
 </code></pre>
+  </section>
   <section id="pagination">
     <h1>Pagination</h1>
     <ul>
@@ -131,6 +132,7 @@
     <ul class="steps">
       <li>Make your point</li>
       <li>Step by step</li>
+      <li>
 <pre><code>&lt;section&gt;
   &lt;h1&gt;Steps&lt;/h1&gt;
   &lt;ul class="steps"&gt;
@@ -141,6 +143,18 @@
 </code></pre>
       </li>
     </ul>
+  </section>
+  <section id="fits-your-screen">
+    <h1>Fits your screen</h1>
+    <ul>
+      <li>Automatically adjsut the size to your screen</li>
+      <li>Just use relative units in your CSS (em, %)</li>
+      <li>Choose your ratio: 4/3, 16/9, IMAX anyone?</li>
+    </ul>
+<pre><code class="javascript">new Ruban({
+  ratio: 16/9
+});
+</code></pre>
   </section>
   <section id="details">
     <h1>Details</h1>
@@ -192,7 +206,7 @@
   <script src="components/keymaster/keymaster.min.js"></script>
   <script src="components/hammerjs/dist/hammer.min.js"></script>
   <script src="components/highlightjs/highlight.pack.js"></script>
-  <script src="dist/ruban.min.js"></script>
+  <script src="js/ruban.min.js"></script>
   <script>
     function asciiRuban(current) {
       var ruban = '';

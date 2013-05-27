@@ -1,35 +1,30 @@
 (function() {
   var Ruban,
-    _this = this;
+    __bind = function(fn, me){ return function(){ return fn.apply(me, arguments); }; };
 
   Ruban = (function() {
-
     function Ruban(options) {
-      var _this = this;
       this.options = options != null ? options : {};
-      this.next = function() {
-        return Ruban.prototype.next.apply(_this, arguments);
-      };
-      this.prev = function() {
-        return Ruban.prototype.prev.apply(_this, arguments);
-      };
-      this.checkHash = function() {
-        return Ruban.prototype.checkHash.apply(_this, arguments);
-      };
+      this.next = __bind(this.next, this);
+      this.prev = __bind(this.prev, this);
+      this.checkHash = __bind(this.checkHash, this);
       this.initOptions();
       this.$sections = $('section').wrapAll('<div class="ruban"></div>');
       this.$ruban = $('.ruban');
-      this.$current = this.$sections.first();
       this.toc();
+      this.current(this.$sections.first());
+      this.pagination();
       this.checkHash();
       this.highlight();
       this.resize();
       this.bind();
+      this.$ruban.css('transition-property', 'transform');
       this.$ruban.css('transition-duration', this.options.transitionDuration);
     }
 
     Ruban.prototype.initOptions = function() {
       var _base, _base1, _base2, _base3, _ref, _ref1, _ref2, _ref3;
+
       if ((_ref = (_base = this.options).ratio) == null) {
         _base.ratio = 4 / 3;
       }
@@ -61,6 +56,7 @@
 
     Ruban.prototype.bindResize = function() {
       var _this = this;
+
       return $(window).resize(function() {
         _this.resize();
         return _this.go(_this.$current, {
@@ -75,6 +71,7 @@
 
     Ruban.prototype.resize = function() {
       var height, min, outerHeight, outerWidth, paddingH, paddingV, width, _ref;
+
       _ref = [$(window).width(), $(window).height()], outerWidth = _ref[0], outerHeight = _ref[1];
       if (outerWidth > this.options.ratio * outerHeight) {
         min = outerHeight;
@@ -111,9 +108,11 @@
 
     Ruban.prototype.checkHash = function() {
       var hash, slide;
+
       hash = window.location.hash;
-      slide = hash.substr(2) || 1;
-      return this.go(slide);
+      if (slide = hash.substr(2)) {
+        return this.go(slide);
+      }
     };
 
     Ruban.prototype.highlight = function() {
@@ -130,12 +129,14 @@
 
     Ruban.prototype.prevSlide = function() {
       var $prev;
+
       $prev = this.$current.prev('section');
       return this.go($prev);
     };
 
     Ruban.prototype.prevStep = function() {
       var $prev;
+
       this.$steps.eq(this.index).removeClass('step').fadeOut();
       $prev = this.$steps.eq(--this.index);
       if (!(this.index < -1)) {
@@ -159,12 +160,14 @@
 
     Ruban.prototype.nextSlide = function() {
       var $next;
+
       $next = this.$current.next('section');
       return this.go($next);
     };
 
     Ruban.prototype.nextStep = function() {
       var $next;
+
       this.$steps.eq(this.index).removeClass('step');
       $next = this.$steps.eq(++this.index);
       if ($next.length) {
@@ -189,6 +192,7 @@
 
     Ruban.prototype.find = function(slide) {
       var $section;
+
       if (slide instanceof $) {
         return slide;
       } else {
@@ -201,7 +205,8 @@
     };
 
     Ruban.prototype.go = function(slide, options) {
-      var $section, y;
+      var $section;
+
       if (slide == null) {
         slide = 1;
       }
@@ -211,40 +216,56 @@
       $section = this.find(slide);
       if ($section.length && (options.force || !$section.is(this.$current))) {
         this.checkSteps($section);
-        window.location.hash = "/" + ($section.attr('id') || $section.index() + 1);
-        y = $section.prevAll().map(function() {
-          return $(this).outerHeight();
-        }).get().reduce(function(memo, height) {
-          return memo + height;
-        }, 0);
-        this.$ruban.css('transform', "translateY(-" + y + "px)");
-        if (this.$current != null) {
-          this.$current.removeClass('active').trigger('inactive');
-        }
-        $section.addClass('active').trigger('active');
-        this.$current = $section;
-        if (this.options.pagination) {
-          return this.pagination();
-        }
+        this.navigate($section);
+        this.translate($section);
+        this.current($section);
+        return this.pagination();
       }
     };
 
-    Ruban.prototype.pagination = function() {
-      if (!this.$pagination) {
-        this.$ruban.parent().append('<footer class="pagination"></footer>');
-        this.$pagination = $('.pagination');
-        this.total = this.$sections.length;
+    Ruban.prototype.navigate = function($section) {
+      return window.location.hash = "/" + ($section.attr('id') || $section.index() + 1);
+    };
+
+    Ruban.prototype.translate = function($section) {
+      var y;
+
+      y = $section.prevAll().map(function() {
+        return $(this).outerHeight();
+      }).get().reduce(function(memo, height) {
+        return memo + height;
+      }, 0);
+      return this.$ruban.css('transform', "translateY(-" + y + "px)");
+    };
+
+    Ruban.prototype.current = function($section) {
+      if (this.$current != null) {
+        this.$current.removeClass('active').trigger('inactive');
       }
-      return this.$pagination.html("" + (this.$current.index() + 1) + "/" + this.total);
+      $section.addClass('active').trigger('active');
+      return this.$current = $section;
+    };
+
+    Ruban.prototype.pagination = function() {
+      if (this.options.pagination) {
+        if (!this.$pagination) {
+          this.$ruban.parent().append('<footer class="pagination"></footer>');
+          this.$pagination = $('.pagination');
+          this.total = this.$sections.length;
+        }
+        return this.$pagination.html("" + (this.$current.index() + 1) + "/" + this.total);
+      }
     };
 
     Ruban.prototype.toc = function() {
       var $toc, $ul;
+
       $toc = $('.toc');
       if ($toc.length) {
         $ul = $('<ul/>');
         $('section:not(.no-toc) > h1:only-child').each(function() {
           var $section, title;
+
           $section = $(this).parent();
           title = $(this).text();
           return $ul.append($('<li/>')).append($('<a/>', {
