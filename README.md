@@ -11,6 +11,14 @@ You'll find the documentation on a Ruban: http://loicfrering.github.io/ruban/.
 Changelog
 ---------
 
+### 0.2.0
+
+* Move css and js files from dist/ to css/ and js/ directories.
+* Do not generate the Table of Content's title.
+* Add a quickstart distribution.
+* Fix some resizing issues.
+* Improve the documentation.
+
 ### 0.1.2
 
 * Table of Contents automatic generation.

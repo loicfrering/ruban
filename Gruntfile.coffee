@@ -5,10 +5,12 @@ module.exports = (grunt) ->
     pkg: grunt.file.readJSON('package.json')
     meta:
       banner: """
-              // <%= pkg.name %> v<%= pkg.version %>
-              //
-              // Copyright (c) 2013 <%= pkg.author %>
-              // Distributed under the <%= pkg.license %> license
+              /**
+               * <%= pkg.name %> v<%= pkg.version %>
+               *
+               * Copyright (c) 2013 <%= pkg.author %>
+               * Distributed under the <%= pkg.license %> license
+               */
 
               """
     coffee:
@@ -34,6 +36,8 @@ module.exports = (grunt) ->
         files:
           'js/ruban.min.js': 'js/ruban.js'
     cssmin:
+      options:
+        banner: '<%= meta.banner %>'
       dist:
         files:
           'css/ruban.min.css': 'css/ruban.css'

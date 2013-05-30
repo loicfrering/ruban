@@ -180,10 +180,10 @@ class Ruban
       @$pagination.html("#{@$current.index() + 1}/#{@total}")
 
   toc: ->
-    $toc = $('.toc')
+    $toc = $('.toc').first()
     if $toc.length
       $ul = $('<ul/>')
-      $('section:not(.no-toc) > h1:only-child').each(->
+      $('section:not(.no-toc,.toc) > h1:only-child').each(->
         $section = $(this).parent()
         title = $(this).text()
         $ul.append($('<li/>'))
@@ -193,8 +193,7 @@ class Ruban
              text:  title
            ))
       )
-      $toc.append('<h1>Table of Contents</h1>')
-          .append($ul)
+      $toc.append($ul)
 
 
 window.Ruban = Ruban

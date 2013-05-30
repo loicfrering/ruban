@@ -29,6 +29,16 @@
     #examples ul {
       padding-left: 0;
     }
+
+    #getting-started-unleash-your-power {
+      color: white;
+      background-color: #0071B5;
+      border-color: white;
+    }
+
+    #getting-started-unleash-your-power strong {
+      text-shadow: 0.06em 0.06em 0 #0071B5, 0.07em 0.07em 0 #fff;
+    }
   </style>
 </head>
 
@@ -46,18 +56,32 @@
     <h1>Your slides parading on a <strong>ruban</strong>!</h1>
   </section>
   <section id="table-of-contents" class="toc">
+    <h1>Table of Contents</h1>
   </section>
   <section id="installation">
-    <h1>Installation</h1>
+    <h1><i class="icon-download"></i> Installation</h1>
+  </section>
+  <section id="installation-alternatives">
+    <h1>Alternatives</h1>
+    <ul>
+      <li><a href="#/installation-quickstart">Using a quickstart archive</a></li>
+      <li><a href="#/installation-bower">Using Bower</a></li>
+    </ul>
+  </section>
+  <section id="installation-quickstart">
+    <h1>Quickstart</h1>
+    <ol>
+      <li><a href="https://github.com/loicfrering/ruban/archive/v0.2.0-quickstart.zip" title="Ruban Quickstart">Download the quickstart distribution</a></li>
+      <li>Extract the archive</li>
+      <li>Start editing the index.html!</li>
+    </ol>
   </section>
   <section id="installation-bower">
-    <h1>With Bower</h1>
+    <h1>Using Bower</h1>
     <p><code>$ bower install ruban --save</code></p>
+    <p>Create an index.html file with the following content <a href="#/installation-bower-html" title="See HTML"><i class="icon-level-down"></i></a></p>
   </section>
-  <section id="getting-started">
-    <h1>Getting started</h1>
-  </section>
-  <section id="getting-started-html">
+  <section id="installation-bower-html">
 <pre><code style="font-size: 34%;">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
@@ -66,8 +90,8 @@
   &lt;link rel="stylesheet" href="components/normalize-css/normalize.css" /&gt;
   &lt;link rel="stylesheet" href="components/font-awesome/build/assets/font-awesome/css/font-awesome.min.css" /&gt;
   &lt;link rel="stylesheet" href="components/highlightjs/styles/tomorrow.css" /&gt;
-  &lt;link rel="stylesheet" href="components/ruban/dist/ruban.min.css" /&gt;
-  &lt;link rel="stylesheet" href="components/ruban/dist/ruban-print.min.css" media="print" /&gt;
+  &lt;link rel="stylesheet" href="components/ruban/css/ruban.min.css" /&gt;
+  &lt;link rel="stylesheet" href="components/ruban/css/ruban-print.min.css" media="print" /&gt;
 &lt;/head&gt;
 
 &lt;body&gt;
@@ -79,7 +103,7 @@
   &lt;script src="components/keymaster/keymaster.min.js"&gt;&lt;/script&gt;
   &lt;script src="components/hammerjs/dist/hammer.min.js"&gt;&lt;/script&gt;
   &lt;script src="components/highlightjs/highlight.pack.js"&gt;&lt;/script&gt;
-  &lt;script src="components/ruban/dist/ruban.min.js"&gt;&lt;/script&gt;
+  &lt;script src="components/ruban/js/ruban.min.js"&gt;&lt;/script&gt;
   &lt;script&gt;
     <strong>new Ruban();</strong>
   &lt;/script&gt;
@@ -87,8 +111,40 @@
 &lt;/html&gt;
 </code></pre>
   </section>
+  <section id="getting-started">
+    <h1><i class="icon-rocket"></i> Getting started</h1>
+  </section>
+  <section id="getting-started-sections">
+    <h1>Getting started</h1>
+    <ul>
+      <li>Slides are just <strong>&lt;sections&gt;</strong></li>
+      <li>Fill these sections with HTML</li>
+      <li><i class="icon-globe"></i> Open your browser &amp; enjoy!</li>
+    </ul>
+<pre><code>&lt;section id="getting-started-sections"&gt;
+  &lt;h1&gt;Getting started&lt;/h1&gt;
+  &lt;ul&gt;
+    &lt;li&gt;Slides are just &amp;lt;sections&amp;gt;&lt;/li&gt;
+    &lt;li&gt;Fill these sections with HTML&lt;/li&gt;
+    &lt;li&gt;Open your browser and enjoy!&lt;/li&gt;
+  &lt;/ul&gt;
+&lt;/section&gt;
+</code></pre>
+  </section>
+  <section id="getting-started-unleash-your-power" class="no-toc">
+    <h1>Unleash your <strong>HTML</strong> and <strong>CSS</strong> power!</h1>
+  </section>
+  <section id="getting-started-font-awesome" class="no-toc">
+    <h1>
+      Enjoy<br />
+      <a href="http://fortawesome.github.io/Font-Awesome/" title="Font Awesome"><i class="icon-flag"></i> Font Awesome</a>
+    </h1>
+  </section>
+  <section id="getting-started-examples" class="no-toc">
+    <h1>Look at the <strong><a href="#/examples" title="Examples">examples</a></strong></h1>
+  </section>
   <section id="features">
-    <h1>Features</h1>
+    <h1><i class="icon-star-empty"></i> Features</h1>
   </section>
   <section id="toc">
     <h1>Table of Contents</h1>
@@ -147,12 +203,30 @@
   <section id="fits-your-screen">
     <h1>Fits your screen</h1>
     <ul>
-      <li>Automatically adjsut the size to your screen</li>
+      <li>Automatically adjust the size to your screen</li>
       <li>Just use relative units in your CSS (em, %)</li>
       <li>Choose your ratio: 4/3, 16/9, IMAX anyone?</li>
     </ul>
 <pre><code class="javascript">new Ruban({
   ratio: 16/9
+});
+</code></pre>
+  </section>
+  <section id="events">
+    <h1>Events</h1>
+    <ul>
+      <li>Add some dynamic behavior to your slides!</li>
+      <li>Listen for active &amp; inactive events</li>
+    </ul>
+<pre><code class="javascript">$('#events').on({
+  active: function() {
+    $(this).find('h1').stop()
+           .animate({marginLeft: '2em'}, 2000);
+  },
+  inactive:function() {
+    $(this).find('h1').stop()
+           .animate({marginLeft: 0});
+  }
 });
 </code></pre>
   </section>
@@ -180,8 +254,33 @@
       <p>You can write down your comments here. They will be available in the printed version.</p>
     </details>
   </section>
+  <section id="options">
+    <h1><i class="icon-wrench"></i> Options</h1>
+  </section>
+  <section id="options-usage">
+    <h1>Options</h1>
+    <p>Pass options to the constructor</p>
+<pre><code class="javascript">var ruban = new Ruban({
+  ratio: 16/9,
+  pagination: true
+});
+</code></pre>
+  </section>
+  <section id="options-list">
+    <h1>Options</h1>
+    <dl style="font-size: 60%;">
+      <dt><strong>ratio</strong> (default: 4/3)</dt>
+      <dd>The desired ratio for your slides</dd>
+      <dt><strong>minPadding</strong> (default: '0.4em')</dt>
+      <dd>The minimum padding around your slides</dd>
+      <dt><strong>transitionDuration</strong> (default: '1s')</dt>
+      <dd>The duration of the ruban's scrolling effect</dd>
+      <dt><strong>pagination</strong> (default: false)</dt>
+      <dd>If the pagination should be enabled or not</dd>
+    </dl>
+  </section>
   <section id="examples">
-    <h1>Examples</h1>
+    <h1><i class="icon-tag"></i> Examples</h1>
   </section>
   <section id="examples-list">
     <h1>Examples</h1>
@@ -199,7 +298,32 @@
     </ul>
   </section>
   <section id="fork-me">
-    <h1><a href="https://github.com/loicfrering/ruban" title="Fork me on GitHub">Fork me on GitHub!</a></h1>
+    <h1><i class="icon-github"></i> <a href="https://github.com/loicfrering/ruban" title="Fork me on GitHub">Fork me on GitHub!</a></h1>
+  </section>
+  <section id="contributing">
+    <h1>Contributing</h1>
+    <ol style="font-size: 70%;">
+      <li>Install <a href="http://nodejs.org/download/" title="Download Node.js">Node.js</a></li>
+      <li>
+        Clone the project and cd into it
+<pre><code class="bash">$ git://github.com/loicfrering/ruban.git &amp;&amp; cd ruban/
+</code></pre>
+      </li>
+      <li>
+        Install dependencies:
+<pre><code class="bash">$ npm install -g grunt-cli
+$ npm install
+$ bower install
+</code></pre>
+      </li>
+      <li>
+        Compile and watch coffee and less sources:
+<pre><code class="bash">$ grunt
+$ grunt watch
+</code></pre>
+      <li>Start implementing amazing features!</li>
+      <li>Open a Pull Request to share the <i class="icon-heart"></i></li>
+    </ol>
   </section>
 
   <script src="components/jquery/jquery.min.js"></script>
@@ -223,17 +347,28 @@
 
     var timeoutId, i = 0;
 
-    $('section').first().on('active', function() {
-      var $pre = $(this).find('pre');
-      timeoutId = setInterval(function() {
-        var ruban = asciiRuban(i++ % 6);
-        $pre.html(ruban);
-      }, 1000);
+    $('#ruban').on({
+      active: function() {
+        var $pre = $(this).find('pre');
+        timeoutId = setInterval(function() {
+          var ruban = asciiRuban(i++ % 6);
+          $pre.html(ruban);
+        }, 1000);
+      },
+      inactive: function() {
+        clearInterval(timeoutId);
+      }
     });
 
-    $('section').first().on('inactive', function() {
-      clearInterval(timeoutId);
+    $('#events').on({
+      active: function() {
+        $(this).find('h1').stop().animate({marginLeft: '2em'}, 2000);
+      },
+      inactive:function() {
+        $(this).find('h1').stop().animate({marginLeft: 0});
+      }
     });
+
 
     var ruban = new Ruban({
       pagination: true
