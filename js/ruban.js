@@ -260,10 +260,10 @@
     Ruban.prototype.toc = function() {
       var $toc, $ul;
 
-      $toc = $('.toc');
+      $toc = $('.toc').first();
       if ($toc.length) {
         $ul = $('<ul/>');
-        $('section:not(.no-toc) > h1:only-child').each(function() {
+        $('section:not(.no-toc,.toc) > h1:only-child').each(function() {
           var $section, title;
 
           $section = $(this).parent();
@@ -274,7 +274,7 @@
             text: title
           }));
         });
-        return $toc.append('<h1>Table of Contents</h1>').append($ul);
+        return $toc.append($ul);
       }
     };
 

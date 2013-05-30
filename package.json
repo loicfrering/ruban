@@ -1,7 +1,7 @@
 {
   "name": "ruban",
   "author": "Loïc Frering <loic.frering@gmail.com>",
-  "version": "0.1.2",
+  "version": "0.2.0",
   "description": "A simple HTML5 based presentation framework.",
   "main": "index.html",
   "scripts": {

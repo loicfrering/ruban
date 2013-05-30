@@ -53,8 +53,14 @@ ul {
 ul ul {
   padding-left: 1em;
 }
+dl dd {
+  padding-bottom: 0.2em;
+}
 pre {
   margin-top: 0;
+}
+pre:last-child {
+  margin-bottom: 0;
 }
 code {
   font-family: 'Source Code Pro', sans-serif;
