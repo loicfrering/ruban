@@ -19,6 +19,7 @@
       this.resize();
       this.bind();
       this.$ruban.css('transition-property', 'transform');
+      this.$ruban.css('-webkit-transition-property', '-webkit-transform');
       this.$ruban.css('transition-duration', this.options.transitionDuration);
     }
 
@@ -50,8 +51,10 @@
     };
 
     Ruban.prototype.bindGestures = function() {
-      Hammer(document).on('swipeleft swipeup', this.next);
-      return Hammer(document).on('swiperight swipedown', this.prev);
+      return Hammer(document, {
+        drag_block_vertical: true,
+        drag_block_horizontal: true
+      }).on('swipeleft swipeup', this.next).on('swiperight swipedown', this.prev);
     };
 
     Ruban.prototype.bindResize = function() {

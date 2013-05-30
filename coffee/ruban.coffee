@@ -12,6 +12,7 @@ class Ruban
     @resize()
     @bind()
     @$ruban.css('transition-property', 'transform')
+    @$ruban.css('-webkit-transition-property', '-webkit-transform')
     @$ruban.css('transition-duration', @options.transitionDuration)
 
   initOptions: () ->
@@ -31,8 +32,11 @@ class Ruban
     key('left, up, backspace, k, h', @prev)
 
   bindGestures: ->
-    Hammer(document).on('swipeleft swipeup', @next)
-    Hammer(document).on('swiperight swipedown', @prev)
+    Hammer(document, {
+      drag_block_vertical:   true,
+      drag_block_horizontal: true
+    }).on('swipeleft swipeup', @next)
+      .on('swiperight swipedown', @prev)
 
   bindResize: ->
     $(window).resize(=>

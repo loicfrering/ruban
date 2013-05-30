@@ -11,6 +11,11 @@ You'll find the documentation on a Ruban: http://loicfrering.github.io/ruban/.
 Changelog
 ---------
 
+### 0.2.1
+
+* Improve and fix navigation with gestures on mobile devices.
+* Fix an issue with resizing on Webkit.
+
 ### 0.2.0
 
 * Move css and js files from dist/ to css/ and js/ directories.
