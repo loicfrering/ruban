@@ -12,6 +12,7 @@ class Ruban
     @resize()
     @bind()
     @$ruban.css('transition-property', 'transform')
+    @$ruban.css('-webkit-transition-property', '-webkit-transform')
     @$ruban.css('transition-duration', @options.transitionDuration)
 
   initOptions: () ->
