@@ -1,4 +1,4 @@
-node_modules
-components
+node_modules/
+bower_components/
 js/*-dev.js
 css/*-dev.css
