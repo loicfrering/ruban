@@ -9,11 +9,11 @@
     "components"
   ],
   "dependencies": {
-    "jquery": "~2.0.0",
+    "jquery": "~2.0.3",
     "keymaster": "~1.6.1",
     "hammerjs": "~1.0.6",
     "normalize-css": "~2.1.0",
     "font-awesome": "~3.1.0",
-    "highlightjs": "~7.3.0"
+    "highlightjs": "~7.5.0"
   }
 }
