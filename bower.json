@@ -11,7 +11,7 @@
   "dependencies": {
     "jquery": "~2.0.0",
     "keymaster": "latest",
-    "hammerjs": "~1.0.3",
+    "hammerjs": "~1.0.6",
     "normalize-css": "~2.1.0",
     "font-awesome": "~3.1.0",
     "highlightjs": "~7.3.0"
