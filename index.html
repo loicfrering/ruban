@@ -82,16 +82,16 @@
     <p>Create an index.html file with the following content <a href="#/installation-bower-html" title="See HTML"><i class="fa fa-level-down"></i></a></p>
   </section>
   <section id="installation-bower-html">
-<pre><code style="font-size: 34%;">&lt;!DOCTYPE html&gt;
+<pre><code style="font-size: 30%;">&lt;!DOCTYPE html&gt;
 &lt;html&gt;
 &lt;head&gt;
   &lt;title&gt;I &amp;lt;3 Ruban&lt;/title&gt;
   &lt;meta charset="utf-8" /&gt;
-  &lt;link rel="stylesheet" href="components/normalize-css/normalize.css" /&gt;
-  &lt;link rel="stylesheet" href="components/font-awesome/build/assets/font-awesome/css/font-awesome.min.css" /&gt;
-  &lt;link rel="stylesheet" href="components/highlightjs/styles/tomorrow.css" /&gt;
-  &lt;link rel="stylesheet" href="components/ruban/css/ruban.min.css" /&gt;
-  &lt;link rel="stylesheet" href="components/ruban/css/ruban-print.min.css" media="print" /&gt;
+  &lt;link rel="stylesheet" href="bower_components/normalize-css/normalize.css" /&gt;
+  &lt;link rel="stylesheet" href="bower_components/font-awesome/css/font-awesome.min.css" /&gt;
+  &lt;link rel="stylesheet" href="bower_components/highlightjs/styles/tomorrow.css" /&gt;
+  &lt;link rel="stylesheet" href="bower_components/ruban/css/ruban.min.css" /&gt;
+  &lt;link rel="stylesheet" href="bower_components/ruban/css/ruban-print.min.css" media="print" /&gt;
 &lt;/head&gt;
 
 &lt;body&gt;
@@ -99,11 +99,11 @@
     <strong>&lt;h1&gt;My Awesome Presentation&lt;/h1&gt;</strong>
   <strong>&lt;/section&gt;</strong>
 
-  &lt;script src="components/jquery/jquery.min.js"&gt;&lt;/script&gt;
-  &lt;script src="components/keymaster/keymaster.min.js"&gt;&lt;/script&gt;
-  &lt;script src="components/hammerjs/dist/hammer.min.js"&gt;&lt;/script&gt;
-  &lt;script src="components/highlightjs/highlight.pack.js"&gt;&lt;/script&gt;
-  &lt;script src="components/ruban/js/ruban.min.js"&gt;&lt;/script&gt;
+  &lt;script src="bower_components/jquery/jquery.min.js"&gt;&lt;/script&gt;
+  &lt;script src="bower_components/keymaster/keymaster.js"&gt;&lt;/script&gt;
+  &lt;script src="bower_components/hammerjs/hammer.min.js"&gt;&lt;/script&gt;
+  &lt;script src="bower_components/highlightjs/highlight.pack.js"&gt;&lt;/script&gt;
+  &lt;script src="bower_components/ruban/js/ruban.min.js"&gt;&lt;/script&gt;
   &lt;script&gt;
     <strong>new Ruban();</strong>
   &lt;/script&gt;
@@ -189,7 +189,7 @@
       <li>Make your point</li>
       <li>Step by step</li>
       <li>
-<pre><code>&lt;section&gt;
+<pre><code class="xml">&lt;section&gt;
   &lt;h1&gt;Steps&lt;/h1&gt;
   &lt;ul class="steps"&gt;
     &lt;li&gt;Make your point&lt;/li&gt;
