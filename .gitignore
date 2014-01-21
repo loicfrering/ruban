@@ -1,4 +1,5 @@
 node_modules/
 bower_components/
+components/
 js/*-dev.js
 css/*-dev.css
