@@ -42,6 +42,21 @@ module.exports = (grunt) ->
         files:
           'css/ruban.min.css': 'css/ruban.css'
           'css/ruban-print.min.css': 'css/ruban-print.css'
+    copy:
+      libs:
+        expand: true
+        cwd: 'bower_components/'
+        src: [
+          'normalize-css/normalize.css',
+          'font-awesome/css/font-awesome.min.css'
+          'font-awesome/fonts/fontawesome-*'
+          'highlightjs/styles/tomorrow.css',
+          'jquery/jquery.min.js',
+          'keymaster/keymaster.js',
+          'hammerjs/hammer.min.js',
+          'highlightjs/highlight.pack.js'
+        ]
+        dest: 'components/'
     watch:
       coffee:
         files: 'coffee/ruban.coffee'
@@ -56,8 +71,9 @@ module.exports = (grunt) ->
   grunt.loadNpmTasks('grunt-contrib-less');
   grunt.loadNpmTasks('grunt-contrib-uglify');
   grunt.loadNpmTasks('grunt-contrib-cssmin');
+  grunt.loadNpmTasks('grunt-contrib-copy');
   grunt.loadNpmTasks('grunt-contrib-watch');
 
   # Default tasks
-  grunt.registerTask('default', ['coffee:compile', 'less:compile'])
-  grunt.registerTask('dist', ['coffee:dist', 'uglify', 'less:dist', 'cssmin'])
+  grunt.registerTask('default', ['copy', 'coffee:compile', 'less:compile', 'watch'])
+  grunt.registerTask('dist', ['copy', 'coffee:dist', 'uglify', 'less:dist', 'cssmin'])

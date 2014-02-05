@@ -28,8 +28,8 @@ class Ruban
     @bindHashChange()
 
   bindKeys: ->
-    key('right, down, space, return, j, l', @next)
-    key('left, up, backspace, k, h', @prev)
+    key('right, down, space, return, j, l, pagedown', @next)
+    key('left, up, backspace, k, h, pageup', @prev)
 
   bindGestures: ->
     Hammer(document, {
