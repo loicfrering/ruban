@@ -20,6 +20,7 @@ class Ruban
     @options.minPadding         ?= '0.4em'
     @options.transitionDuration ?= '1s'
     @options.pagination         ?= false
+    @options.stripHtmlInToc     ?= false
 
   bind: ->
     @bindKeys()
@@ -186,16 +187,27 @@ class Ruban
   toc: ->
     $toc = $('.toc').first()
     if $toc.length
+      stripHtmlInToc = @options.stripHtmlInToc
       $ul = $('<ul/>')
+
       $('section:not(.no-toc,.toc) > h1:only-child').each(->
         $section = $(this).parent()
-        title = $(this).text()
-        $ul.append($('<li/>'))
-           .append($('<a/>',
-             href:  "#/#{$section.attr('id') || $section.index() + 1}"
-             title: title
-             text:  title
-           ))
+
+        if stripHtmlInToc
+          title = html = $(this).text()
+        else
+          $h1 = $(this).clone()
+                       .find('a')
+                         .replaceWith(-> $(this).text())
+                         .end()
+          title = $h1.text()
+          html  = $h1.html()
+
+        $('<li/>').append($('<a/>',
+          href:  "#/#{$section.attr('id') || $section.index() + 1}"
+          title: title
+          html:  html
+        )).appendTo($ul);
       )
       $toc.append($ul)
 
