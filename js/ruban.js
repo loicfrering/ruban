@@ -46,8 +46,8 @@
     };
 
     Ruban.prototype.bindKeys = function() {
-      key('right, down, space, return, j, l', this.next);
-      return key('left, up, backspace, k, h', this.prev);
+      key('right, down, space, return, j, l, pagedown', this.next);
+      return key('left, up, backspace, k, h, pageup', this.prev);
     };
 
     Ruban.prototype.bindGestures = function() {

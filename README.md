@@ -11,6 +11,12 @@ You'll find the documentation on a Ruban: http://loicfrering.github.io/ruban/.
 Changelog
 ---------
 
+### 0.2.2
+
+* Bind pageup and pagedown keys.
+* Update Font-Awesome to 4.0.3.
+* Update other dependencies versions.
+
 ### 0.2.1
 
 * Improve and fix navigation with gestures on mobile devices.
