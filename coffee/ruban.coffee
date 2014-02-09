@@ -97,7 +97,7 @@ class Ruban
 
   prevSlide: ->
     $prev = @$current.prev('section')
-    @go($prev)
+    @go($prev, direction: 'backward')
 
   prevStep: ->
     @$steps.eq(@index).removeClass('step').fadeOut()
@@ -118,7 +118,7 @@ class Ruban
 
   nextSlide: ->
     $next = @$current.next('section')
-    @go($next)
+    @go($next, direction: 'forward')
 
   nextStep: ->
     @$steps.eq(@index).removeClass('step')
@@ -128,13 +128,17 @@ class Ruban
     else
       @nextSlide()
 
-  checkSteps: ($section) ->
+  checkSteps: ($section, direction) ->
     @$steps = $section.find('.steps').children()
     unless @$steps.length
       @$steps = $section.find('.step')
 
-    @index = -1
-    @$steps.hide()
+    if direction is 'backward'
+      @index = @$steps.length - 1
+      @$steps.show()
+    else
+      @index = -1
+      @$steps.hide()
 
   hasSteps: ->
     @$steps? and @$steps.length isnt 0
@@ -152,7 +156,7 @@ class Ruban
     $section = @find(slide)
 
     if $section.length and (options.force or not $section.is(@$current))
-      @checkSteps($section)
+      @checkSteps($section, options.direction)
       @navigate($section)
       @translate($section)
       @current($section)
