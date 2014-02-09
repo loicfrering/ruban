@@ -22,11 +22,13 @@ class Ruban
     @options.pagination         ?= false
     @options.stripHtmlInToc     ?= false
     @options.bindClicks         ?= false
+    @options.bindMouseWheel     ?= false
 
   bind: ->
     @bindKeys()
     @bindGestures()
     @bindClicks() if @options.bindClicks
+    @bindMouseWheel() if @options.bindMouseWheel
 
     @bindResize()
     @bindHashChange()
@@ -48,6 +50,14 @@ class Ruban
       switch e.which
         when 1 then @next()
         when 3 then @prev()
+    )
+
+  bindMouseWheel: ->
+    @$ruban.on('wheel', (e) =>
+      if e.originalEvent.deltaY > 0
+        @next()
+      else if e.originalEvent.deltaY < 0
+        @prev()
     )
 
   bindResize: ->
