@@ -11,6 +11,20 @@ You'll find the documentation on a Ruban: http://loicfrering.github.io/ruban/.
 Changelog
 ---------
 
+### 0.3.0
+
+* Do not reset the steps when coming from the following slide but allow passing
+  them in the backward direction.
+* Do not entirely strip HTML tags in the generated table of contents. It allows
+  to have Font-Awesome icons in the TOC.
+* Do not display the pagination when printing because it is dynamically updated
+  with JavaScript and thus static and wrong in the print. You can use the
+  pagination capabilities of the printer's driver to get pagination in a print.
+* Support navigating through the Ruban with left and right mouse clicks.
+  Disabled by default because it prevents text selection and the display of the
+  context menu.
+* Support navigating with the mouse wheel. Disabled by default.
+
 ### 0.2.2
 
 * Bind pageup and pagedown keys.
