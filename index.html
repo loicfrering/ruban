@@ -71,7 +71,7 @@
   <section id="installation-quickstart">
     <h1>Quickstart</h1>
     <ol>
-      <li><a href="https://github.com/loicfrering/ruban/archive/v0.2.2-quickstart.zip" title="Ruban Quickstart">Download the quickstart distribution</a></li>
+      <li><a href="https://github.com/loicfrering/ruban/archive/v0.3.0-quickstart.zip" title="Ruban Quickstart">Download the quickstart distribution</a></li>
       <li>Extract the archive</li>
       <li>Start editing the index.html!</li>
     </ol>
@@ -153,7 +153,7 @@
       <li>Selects sections with a h1 as unique child</li>
       <li>Exclude sections with the no-toc class</li>
     </ul>
-<pre style="margin-bottom: 0;"><code>&lt;section class="toc"&gt;
+<pre style="margin-bottom: 0;"><code class="xml">&lt;section class="toc"&gt;
 &lt;/section&gt;
 &lt;section&gt;
   &lt;h1&gt;First title&lt;/h1&gt;
@@ -268,7 +268,7 @@
   </section>
   <section id="options-list">
     <h1>Options</h1>
-    <dl style="font-size: 60%;">
+    <dl style="font-size: 50%;">
       <dt><strong>ratio</strong> (default: 4/3)</dt>
       <dd>The desired ratio for your slides</dd>
       <dt><strong>minPadding</strong> (default: '0.4em')</dt>
@@ -277,6 +277,15 @@
       <dd>The duration of the ruban's scrolling effect</dd>
       <dt><strong>pagination</strong> (default: false)</dt>
       <dd>If the pagination should be enabled or not</dd>
+      <dt><strong>stripHtmlInToc</strong> (default: false)</dt>
+      <dd>Should HTML tags be stripped when generating the TOC</dd>
+      <dt><strong>bindClicks</strong> (default: false)</dt>
+      <dd>
+        Use left and right clicks to navigate through the ruban.<br />
+        Be aware that it prevents selecting text and opening the contextual menu.
+      </dd>
+      <dt><strong>bindMouseWheel</strong> (default: false)</dt>
+      <dd>Use the mouse wheel to navigate through the ruban.</dd>
     </dl>
   </section>
   <section id="examples">

@@ -24,23 +24,37 @@
     }
 
     Ruban.prototype.initOptions = function() {
-      var _base, _base1, _base2, _base3, _ref, _ref1, _ref2, _ref3;
-
-      if ((_ref = (_base = this.options).ratio) == null) {
+      var _base, _base1, _base2, _base3, _base4, _base5, _base6;
+      if ((_base = this.options).ratio == null) {
         _base.ratio = 4 / 3;
       }
-      if ((_ref1 = (_base1 = this.options).minPadding) == null) {
+      if ((_base1 = this.options).minPadding == null) {
         _base1.minPadding = '0.4em';
       }
-      if ((_ref2 = (_base2 = this.options).transitionDuration) == null) {
+      if ((_base2 = this.options).transitionDuration == null) {
         _base2.transitionDuration = '1s';
       }
-      return (_ref3 = (_base3 = this.options).pagination) != null ? _ref3 : _base3.pagination = false;
+      if ((_base3 = this.options).pagination == null) {
+        _base3.pagination = false;
+      }
+      if ((_base4 = this.options).stripHtmlInToc == null) {
+        _base4.stripHtmlInToc = false;
+      }
+      if ((_base5 = this.options).bindClicks == null) {
+        _base5.bindClicks = false;
+      }
+      return (_base6 = this.options).bindMouseWheel != null ? (_base6 = this.options).bindMouseWheel : _base6.bindMouseWheel = false;
     };
 
     Ruban.prototype.bind = function() {
       this.bindKeys();
       this.bindGestures();
+      if (this.options.bindClicks) {
+        this.bindClicks();
+      }
+      if (this.options.bindMouseWheel) {
+        this.bindMouseWheel();
+      }
       this.bindResize();
       return this.bindHashChange();
     };
@@ -57,9 +71,34 @@
       }).on('swipeleft swipeup', this.next).on('swiperight swipedown', this.prev);
     };
 
+    Ruban.prototype.bindClicks = function() {
+      var _this = this;
+      this.$ruban.contextmenu(function() {
+        return false;
+      });
+      return this.$ruban.mousedown(function(e) {
+        switch (e.which) {
+          case 1:
+            return _this.next();
+          case 3:
+            return _this.prev();
+        }
+      });
+    };
+
+    Ruban.prototype.bindMouseWheel = function() {
+      var _this = this;
+      return this.$ruban.on('wheel', function(e) {
+        if (e.originalEvent.deltaY > 0) {
+          return _this.next();
+        } else if (e.originalEvent.deltaY < 0) {
+          return _this.prev();
+        }
+      });
+    };
+
     Ruban.prototype.bindResize = function() {
       var _this = this;
-
       return $(window).resize(function() {
         _this.resize();
         return _this.go(_this.$current, {
@@ -74,7 +113,6 @@
 
     Ruban.prototype.resize = function() {
       var height, min, outerHeight, outerWidth, paddingH, paddingV, width, _ref;
-
       _ref = [$(window).width(), $(window).height()], outerWidth = _ref[0], outerHeight = _ref[1];
       if (outerWidth > this.options.ratio * outerHeight) {
         min = outerHeight;
@@ -111,7 +149,6 @@
 
     Ruban.prototype.checkHash = function() {
       var hash, slide;
-
       hash = window.location.hash;
       if (slide = hash.substr(2)) {
         return this.go(slide);
@@ -132,14 +169,14 @@
 
     Ruban.prototype.prevSlide = function() {
       var $prev;
-
       $prev = this.$current.prev('section');
-      return this.go($prev);
+      return this.go($prev, {
+        direction: 'backward'
+      });
     };
 
     Ruban.prototype.prevStep = function() {
       var $prev;
-
       this.$steps.eq(this.index).removeClass('step').fadeOut();
       $prev = this.$steps.eq(--this.index);
       if (!(this.index < -1)) {
@@ -163,14 +200,14 @@
 
     Ruban.prototype.nextSlide = function() {
       var $next;
-
       $next = this.$current.next('section');
-      return this.go($next);
+      return this.go($next, {
+        direction: 'forward'
+      });
     };
 
     Ruban.prototype.nextStep = function() {
       var $next;
-
       this.$steps.eq(this.index).removeClass('step');
       $next = this.$steps.eq(++this.index);
       if ($next.length) {
@@ -180,13 +217,17 @@
       }
     };
 
-    Ruban.prototype.checkSteps = function($section) {
+    Ruban.prototype.checkSteps = function($section, direction) {
       this.$steps = $section.find('.steps').children();
       if (!this.$steps.length) {
         this.$steps = $section.find('.step');
       }
-      this.index = -1;
-      return this.$steps.hide();
+      if (direction === 'backward') {
+        return this.index = this.$steps.length - 1;
+      } else {
+        this.index = -1;
+        return this.$steps.hide();
+      }
     };
 
     Ruban.prototype.hasSteps = function() {
@@ -195,7 +236,6 @@
 
     Ruban.prototype.find = function(slide) {
       var $section;
-
       if (slide instanceof $) {
         return slide;
       } else {
@@ -209,7 +249,6 @@
 
     Ruban.prototype.go = function(slide, options) {
       var $section;
-
       if (slide == null) {
         slide = 1;
       }
@@ -218,7 +257,7 @@
       }
       $section = this.find(slide);
       if ($section.length && (options.force || !$section.is(this.$current))) {
-        this.checkSteps($section);
+        this.checkSteps($section, options.direction);
         this.navigate($section);
         this.translate($section);
         this.current($section);
@@ -232,7 +271,6 @@
 
     Ruban.prototype.translate = function($section) {
       var y;
-
       y = $section.prevAll().map(function() {
         return $(this).outerHeight();
       }).get().reduce(function(memo, height) {
@@ -261,21 +299,28 @@
     };
 
     Ruban.prototype.toc = function() {
-      var $toc, $ul;
-
+      var $toc, $ul, stripHtmlInToc;
       $toc = $('.toc').first();
       if ($toc.length) {
+        stripHtmlInToc = this.options.stripHtmlInToc;
         $ul = $('<ul/>');
         $('section:not(.no-toc,.toc) > h1:only-child').each(function() {
-          var $section, title;
-
+          var $h1, $section, html, title;
           $section = $(this).parent();
-          title = $(this).text();
-          return $ul.append($('<li/>')).append($('<a/>', {
+          if (stripHtmlInToc) {
+            title = html = $(this).text();
+          } else {
+            $h1 = $(this).clone().find('a').replaceWith(function() {
+              return $(this).text();
+            }).end();
+            title = $h1.text();
+            html = $h1.html();
+          }
+          return $('<li/>').append($('<a/>', {
             href: "#/" + ($section.attr('id') || $section.index() + 1),
             title: title,
-            text: title
-          }));
+            html: html
+          })).appendTo($ul);
         });
         return $toc.append($ul);
       }

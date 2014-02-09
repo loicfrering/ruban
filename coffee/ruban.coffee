@@ -20,10 +20,16 @@ class Ruban
     @options.minPadding         ?= '0.4em'
     @options.transitionDuration ?= '1s'
     @options.pagination         ?= false
+    @options.stripHtmlInToc     ?= false
+    @options.bindClicks         ?= false
+    @options.bindMouseWheel     ?= false
 
   bind: ->
     @bindKeys()
     @bindGestures()
+    @bindClicks() if @options.bindClicks
+    @bindMouseWheel() if @options.bindMouseWheel
+
     @bindResize()
     @bindHashChange()
 
@@ -37,6 +43,22 @@ class Ruban
       drag_block_horizontal: true
     }).on('swipeleft swipeup', @next)
       .on('swiperight swipedown', @prev)
+
+  bindClicks: ->
+    @$ruban.contextmenu(-> false)
+    @$ruban.mousedown((e) =>
+      switch e.which
+        when 1 then @next()
+        when 3 then @prev()
+    )
+
+  bindMouseWheel: ->
+    @$ruban.on('wheel', (e) =>
+      if e.originalEvent.deltaY > 0
+        @next()
+      else if e.originalEvent.deltaY < 0
+        @prev()
+    )
 
   bindResize: ->
     $(window).resize(=>
@@ -96,7 +118,7 @@ class Ruban
 
   prevSlide: ->
     $prev = @$current.prev('section')
-    @go($prev)
+    @go($prev, direction: 'backward')
 
   prevStep: ->
     @$steps.eq(@index).removeClass('step').fadeOut()
@@ -117,7 +139,7 @@ class Ruban
 
   nextSlide: ->
     $next = @$current.next('section')
-    @go($next)
+    @go($next, direction: 'forward')
 
   nextStep: ->
     @$steps.eq(@index).removeClass('step')
@@ -127,13 +149,16 @@ class Ruban
     else
       @nextSlide()
 
-  checkSteps: ($section) ->
+  checkSteps: ($section, direction) ->
     @$steps = $section.find('.steps').children()
     unless @$steps.length
       @$steps = $section.find('.step')
 
-    @index = -1
-    @$steps.hide()
+    if direction is 'backward'
+      @index = @$steps.length - 1
+    else
+      @index = -1
+      @$steps.hide()
 
   hasSteps: ->
     @$steps? and @$steps.length isnt 0
@@ -151,7 +176,7 @@ class Ruban
     $section = @find(slide)
 
     if $section.length and (options.force or not $section.is(@$current))
-      @checkSteps($section)
+      @checkSteps($section, options.direction)
       @navigate($section)
       @translate($section)
       @current($section)
@@ -186,16 +211,27 @@ class Ruban
   toc: ->
     $toc = $('.toc').first()
     if $toc.length
+      stripHtmlInToc = @options.stripHtmlInToc
       $ul = $('<ul/>')
+
       $('section:not(.no-toc,.toc) > h1:only-child').each(->
         $section = $(this).parent()
-        title = $(this).text()
-        $ul.append($('<li/>'))
-           .append($('<a/>',
-             href:  "#/#{$section.attr('id') || $section.index() + 1}"
-             title: title
-             text:  title
-           ))
+
+        if stripHtmlInToc
+          title = html = $(this).text()
+        else
+          $h1 = $(this).clone()
+                       .find('a')
+                         .replaceWith(-> $(this).text())
+                         .end()
+          title = $h1.text()
+          html  = $h1.html()
+
+        $('<li/>').append($('<a/>',
+          href:  "#/#{$section.attr('id') || $section.index() + 1}"
+          title: title
+          html:  html
+        )).appendTo($ul);
       )
       $toc.append($ul)
 
