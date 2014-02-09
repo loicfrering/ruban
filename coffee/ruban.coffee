@@ -135,7 +135,6 @@ class Ruban
 
     if direction is 'backward'
       @index = @$steps.length - 1
-      @$steps.show()
     else
       @index = -1
       @$steps.hide()
