@@ -21,10 +21,13 @@ class Ruban
     @options.transitionDuration ?= '1s'
     @options.pagination         ?= false
     @options.stripHtmlInToc     ?= false
+    @options.bindClicks         ?= false
 
   bind: ->
     @bindKeys()
     @bindGestures()
+    @bindClicks() if @options.bindClicks
+
     @bindResize()
     @bindHashChange()
 
@@ -38,6 +41,14 @@ class Ruban
       drag_block_horizontal: true
     }).on('swipeleft swipeup', @next)
       .on('swiperight swipedown', @prev)
+
+  bindClicks: ->
+    @$ruban.contextmenu(-> false)
+    @$ruban.mousedown((e) =>
+      switch e.which
+        when 1 then @next()
+        when 3 then @prev()
+    )
 
   bindResize: ->
     $(window).resize(=>
