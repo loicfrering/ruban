@@ -6,9 +6,9 @@
     function Ruban(options) {
       this.options = options != null ? options : {};
       this.next = __bind(this.next, this);
+      this.last = __bind(this.last, this);
       this.prev = __bind(this.prev, this);
       this.first = __bind(this.first, this);
-      this.last = __bind(this.last, this);
       this.checkHash = __bind(this.checkHash, this);
       this.initOptions();
       this.$sections = $('section').wrapAll('<div class="ruban"></div>');
@@ -63,9 +63,9 @@
 
     Ruban.prototype.bindKeys = function() {
       key('right, down, space, return, j, l, pagedown', this.next);
+      key('left, up, backspace, k, h, pageup', this.prev);
       key('home', this.first);
-      key('end', this.last);
-      return key('left, up, backspace, k, h, pageup', this.prev);
+      return key('last', this.last);
     };
 
     Ruban.prototype.bindGestures = function() {
@@ -163,6 +163,18 @@
       return hljs.initHighlightingOnLoad();
     };
 
+    Ruban.prototype.first = function() {
+      return this.firstSlide();
+    };
+
+    Ruban.prototype.firstSlide = function() {
+      var $first;
+      $first = this.$current.prevAll('section:first-child');
+      return this.go($first, {
+        direction: 'backward'
+      });
+    };
+
     Ruban.prototype.prev = function() {
       if (this.hasSteps()) {
         return this.prevStep();
@@ -194,23 +206,13 @@
       }
     };
 
-    Ruban.prototype.first = function() {
-      return this.firstSlide();
-    };
-
-    Ruban.prototype.firstSlide = function() {
-      var $first = this.$current.prevAll('section:first-child');
-      return this.go($first, {
-        direction: 'backward'
-      });
-    };
-
     Ruban.prototype.last = function() {
       return this.lastSlide();
     };
 
     Ruban.prototype.lastSlide = function() {
-      var $last = this.$current.nextAll('section:last-child');
+      var $last;
+      $last = this.$current.nextAll('section:last-child');
       return this.go($last, {
         direction: 'forward'
       });
