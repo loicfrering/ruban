@@ -20,6 +20,7 @@ class Ruban
     @options.minPadding         ?= '0.4em'
     @options.transitionDuration ?= '1s'
     @options.pagination         ?= false
+    @options.title              ?= null
     @options.stripHtmlInToc     ?= false
     @options.bindClicks         ?= false
     @options.bindMouseWheel     ?= false
@@ -216,13 +217,16 @@ class Ruban
     @$current = $section
 
   pagination: ->
-    if @options.pagination
+    @paginationText = []
+    @paginationText.push @options.title if @options.title
+    if @options.pagination or @options.title
       unless @$pagination
         @$ruban.parent().append('<footer class="pagination"></footer>')
         @$pagination = $('.pagination')
         @total = @$sections.length
-
-      @$pagination.html("#{@$current.index() + 1}/#{@total}")
+      if @options.pagination
+        @paginationText.push("#{@$current.index() + 1}/#{@total}")
+      @$pagination.html(@paginationText.join(' - '))
 
   toc: ->
     $toc = $('.toc').first()
