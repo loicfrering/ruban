@@ -36,6 +36,8 @@ class Ruban
   bindKeys: ->
     key('right, down, space, return, j, l, pagedown', @next)
     key('left, up, backspace, k, h, pageup', @prev)
+    key('home', @first)
+    key('last', @last)
 
   bindGestures: ->
     Hammer(document, {
@@ -110,6 +112,13 @@ class Ruban
   highlight: ->
     hljs.initHighlightingOnLoad()
 
+  first: =>
+    @firstSlide()
+
+  firstSlide: ->
+    $first = @$current.prevAll('section:first-child')
+    @go($first, direction: 'backward')
+
   prev: =>
     if @hasSteps()
       @prevStep()
@@ -130,6 +139,13 @@ class Ruban
         @prevStep()
     else
       @prevSlide()
+
+  last: =>
+    @lastSlide()
+
+  lastSlide: ->
+    $last = @$current.nextAll('section:last-child')
+    @go($last, direction: 'forward')
 
   next: =>
     if @hasSteps()
