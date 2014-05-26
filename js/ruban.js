@@ -6,7 +6,9 @@
     function Ruban(options) {
       this.options = options != null ? options : {};
       this.next = __bind(this.next, this);
+      this.last = __bind(this.last, this);
       this.prev = __bind(this.prev, this);
+      this.first = __bind(this.first, this);
       this.checkHash = __bind(this.checkHash, this);
       this.initOptions();
       this.$sections = $('section').wrapAll('<div class="ruban"></div>');
@@ -24,7 +26,7 @@
     }
 
     Ruban.prototype.initOptions = function() {
-      var _base, _base1, _base2, _base3, _base4, _base5, _base6;
+      var _base, _base1, _base2, _base3, _base4, _base5, _base6, _base7;
       if ((_base = this.options).ratio == null) {
         _base.ratio = 4 / 3;
       }
@@ -37,13 +39,16 @@
       if ((_base3 = this.options).pagination == null) {
         _base3.pagination = false;
       }
-      if ((_base4 = this.options).stripHtmlInToc == null) {
-        _base4.stripHtmlInToc = false;
+      if ((_base4 = this.options).title == null) {
+        _base4.title = null;
       }
-      if ((_base5 = this.options).bindClicks == null) {
-        _base5.bindClicks = false;
+      if ((_base5 = this.options).stripHtmlInToc == null) {
+        _base5.stripHtmlInToc = false;
       }
-      return (_base6 = this.options).bindMouseWheel != null ? (_base6 = this.options).bindMouseWheel : _base6.bindMouseWheel = false;
+      if ((_base6 = this.options).bindClicks == null) {
+        _base6.bindClicks = false;
+      }
+      return (_base7 = this.options).bindMouseWheel != null ? (_base7 = this.options).bindMouseWheel : _base7.bindMouseWheel = false;
     };
 
     Ruban.prototype.bind = function() {
@@ -61,7 +66,9 @@
 
     Ruban.prototype.bindKeys = function() {
       key('right, down, space, return, j, l, pagedown', this.next);
-      return key('left, up, backspace, k, h, pageup', this.prev);
+      key('left, up, backspace, k, h, pageup', this.prev);
+      key('home', this.first);
+      return key('last', this.last);
     };
 
     Ruban.prototype.bindGestures = function() {
@@ -159,6 +166,18 @@
       return hljs.initHighlightingOnLoad();
     };
 
+    Ruban.prototype.first = function() {
+      return this.firstSlide();
+    };
+
+    Ruban.prototype.firstSlide = function() {
+      var $first;
+      $first = this.$current.prevAll('section:first-child');
+      return this.go($first, {
+        direction: 'backward'
+      });
+    };
+
     Ruban.prototype.prev = function() {
       if (this.hasSteps()) {
         return this.prevStep();
@@ -188,6 +207,18 @@
       } else {
         return this.prevSlide();
       }
+    };
+
+    Ruban.prototype.last = function() {
+      return this.lastSlide();
+    };
+
+    Ruban.prototype.lastSlide = function() {
+      var $last;
+      $last = this.$current.nextAll('section:last-child');
+      return this.go($last, {
+        direction: 'forward'
+      });
     };
 
     Ruban.prototype.next = function() {
@@ -288,13 +319,20 @@
     };
 
     Ruban.prototype.pagination = function() {
-      if (this.options.pagination) {
+      this.paginationText = [];
+      if (this.options.title) {
+        this.paginationText.push(this.options.title);
+      }
+      if (this.options.pagination || this.options.title) {
         if (!this.$pagination) {
           this.$ruban.parent().append('<footer class="pagination"></footer>');
           this.$pagination = $('.pagination');
           this.total = this.$sections.length;
         }
-        return this.$pagination.html("" + (this.$current.index() + 1) + "/" + this.total);
+        if (this.options.pagination) {
+          this.paginationText.push("" + (this.$current.index() + 1) + "/" + this.total);
+        }
+        return this.$pagination.html(this.paginationText.join(' - '));
       }
     };
 
