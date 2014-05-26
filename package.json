@@ -3,11 +3,10 @@
   "author": "Loïc Frering <loic.frering@gmail.com>",
   "version": "0.3.0",
   "description": "A simple HTML5 based presentation framework.",
-  "main": "index.html",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"
   },
-  "repository": "",
+  "repository": "https://github.com/loicfrering/ruban.git",
   "license": "MIT",
   "devDependencies": {
     "grunt": "~0.4.1",
