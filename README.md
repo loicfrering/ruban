@@ -11,6 +11,16 @@ You'll find the documentation on a Ruban: http://loicfrering.github.io/ruban/.
 Changelog
 ---------
 
+### 0.3.1
+
+* Add `first()` and `last()` functions to go to the first and last slide.
+* Bind the `home` and `end` keys to these new functions.
+* Introduce the title option which allows to display a fixed title for the
+  presentation in the footer.
+* Add a .center class to easily center text.
+* Correctly set the `main` property of the bower.json.
+* Update Font-Awesome to 4.1.0.
+
 ### 0.3.0
 
 * Do not reset the steps when coming from the following slide but allow passing

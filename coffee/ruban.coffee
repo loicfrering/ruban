@@ -20,6 +20,7 @@ class Ruban
     @options.minPadding         ?= '0.4em'
     @options.transitionDuration ?= '1s'
     @options.pagination         ?= false
+    @options.title              ?= null
     @options.stripHtmlInToc     ?= false
     @options.bindClicks         ?= false
     @options.bindMouseWheel     ?= false
@@ -36,6 +37,8 @@ class Ruban
   bindKeys: ->
     key('right, down, space, return, j, l, pagedown', @next)
     key('left, up, backspace, k, h, pageup', @prev)
+    key('home', @first)
+    key('last', @last)
 
   bindGestures: ->
     Hammer(document, {
@@ -110,6 +113,13 @@ class Ruban
   highlight: ->
     hljs.initHighlightingOnLoad()
 
+  first: =>
+    @firstSlide()
+
+  firstSlide: ->
+    $first = @$current.prevAll('section:first-child')
+    @go($first, direction: 'backward')
+
   prev: =>
     if @hasSteps()
       @prevStep()
@@ -130,6 +140,13 @@ class Ruban
         @prevStep()
     else
       @prevSlide()
+
+  last: =>
+    @lastSlide()
+
+  lastSlide: ->
+    $last = @$current.nextAll('section:last-child')
+    @go($last, direction: 'forward')
 
   next: =>
     if @hasSteps()
@@ -200,13 +217,16 @@ class Ruban
     @$current = $section
 
   pagination: ->
-    if @options.pagination
+    @paginationText = []
+    @paginationText.push @options.title if @options.title
+    if @options.pagination or @options.title
       unless @$pagination
         @$ruban.parent().append('<footer class="pagination"></footer>')
         @$pagination = $('.pagination')
         @total = @$sections.length
-
-      @$pagination.html("#{@$current.index() + 1}/#{@total}")
+      if @options.pagination
+        @paginationText.push("#{@$current.index() + 1}/#{@total}")
+      @$pagination.html(@paginationText.join(' - '))
 
   toc: ->
     $toc = $('.toc').first()
