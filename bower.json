@@ -2,7 +2,7 @@
   "name": "ruban",
   "author": "Loïc Frering <loic.frering@gmail.com>",
   "version": "0.3.0",
-  "main": "index.html",
+  "main": ["js/ruban.min.js", "css/ruban.min.css", "css/ruban-print.min.css"],
   "ignore": [
     "**/.*",
     "node_modules",
