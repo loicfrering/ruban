@@ -13,29 +13,23 @@
       border-left: 1em solid #434343;
       border-right: 1em solid #434343;
     }
-
     .pagination {
       right: 2.6em;
     }
-
     pre code {
       background-color: inherit;
     }
-
     pre .xml .javascript {
       opacity: 1;
     }
-
     #examples ul {
       padding-left: 0;
     }
-
     #getting-started-unleash-your-power {
       color: white;
       background-color: #0071B5;
       border-color: white;
     }
-
     #getting-started-unleash-your-power strong {
       text-shadow: 0.06em 0.06em 0 #0071B5, 0.07em 0.07em 0 #fff;
     }
@@ -236,7 +230,7 @@
       <li>
         Add details &amp; speaker notes to your slides
         <ul>
-          <li>Hidden on the Ruban</li>
+          <li>Hidden on the Ruban (toggle with 'c' key)</li>
           <li>Displayed in the printed version</li>
         </ul>
       </li>
@@ -268,9 +262,11 @@
   </section>
   <section id="options-list">
     <h1>Options</h1>
-    <dl style="font-size: 50%;">
+    <dl style="font-size: 40%;">
       <dt><strong>ratio</strong> (default: 4/3)</dt>
       <dd>The desired ratio for your slides</dd>
+      <dt><strong>fontRatio</strong> (default: 0.4)</dt>
+      <dd>Font size is linked to slide height, default to 0.4%</dd>
       <dt><strong>minPadding</strong> (default: '0.4em')</dt>
       <dd>The minimum padding around your slides</dd>
       <dt><strong>transitionDuration</strong> (default: '1s')</dt>
@@ -352,9 +348,7 @@ $ bower install
       }
       return ruban;
     }
-
     var timeoutId, i = 0;
-
     $('#ruban').on({
       active: function() {
         var $pre = $(this).find('pre');
@@ -367,7 +361,6 @@ $ bower install
         clearInterval(timeoutId);
       }
     });
-
     $('#events').on({
       active: function() {
         $(this).find('h1').stop().animate({marginLeft: '2em'}, 2000);
@@ -376,8 +369,6 @@ $ bower install
         $(this).find('h1').stop().animate({marginLeft: 0});
       }
     });
-
-
     var ruban = new Ruban({
       pagination: true
     });

@@ -1,7 +1,7 @@
 {
   "name": "ruban",
   "author": "Loïc Frering <loic.frering@gmail.com>",
-  "version": "0.3.1",
+  "version": "0.4.0",
   "description": "A simple HTML5 based presentation framework.",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

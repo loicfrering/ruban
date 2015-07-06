@@ -4,9 +4,11 @@
 
   Ruban = (function() {
     function Ruban(options) {
+      var _this = this;
       this.options = options != null ? options : {};
       this.next = __bind(this.next, this);
       this.last = __bind(this.last, this);
+      this.toggleDetails = __bind(this.toggleDetails, this);
       this.prev = __bind(this.prev, this);
       this.first = __bind(this.first, this);
       this.checkHash = __bind(this.checkHash, this);
@@ -16,17 +18,19 @@
       this.toc();
       this.current(this.$sections.first());
       this.pagination();
-      this.checkHash();
       this.highlight();
       this.resize();
       this.bind();
       this.$ruban.css('transition-property', 'transform');
       this.$ruban.css('-webkit-transition-property', '-webkit-transform');
       this.$ruban.css('transition-duration', this.options.transitionDuration);
+      setTimeout(function() {
+        return _this.checkHash();
+      }, 250);
     }
 
     Ruban.prototype.initOptions = function() {
-      var _base, _base1, _base2, _base3, _base4, _base5, _base6, _base7;
+      var _base, _base1, _base2, _base3, _base4, _base5, _base6, _base7, _base8;
       if ((_base = this.options).ratio == null) {
         _base.ratio = 4 / 3;
       }
@@ -48,7 +52,10 @@
       if ((_base6 = this.options).bindClicks == null) {
         _base6.bindClicks = false;
       }
-      return (_base7 = this.options).bindMouseWheel != null ? (_base7 = this.options).bindMouseWheel : _base7.bindMouseWheel = false;
+      if ((_base7 = this.options).bindMouseWheel == null) {
+        _base7.bindMouseWheel = false;
+      }
+      return (_base8 = this.options).fontRatio != null ? (_base8 = this.options).fontRatio : _base8.fontRatio = 0.4;
     };
 
     Ruban.prototype.bind = function() {
@@ -68,7 +75,8 @@
       key('right, down, space, return, j, l, pagedown', this.next);
       key('left, up, backspace, k, h, pageup', this.prev);
       key('home', this.first);
-      return key('last', this.last);
+      key('last', this.last);
+      return key('c', this.toggleDetails);
     };
 
     Ruban.prototype.bindGestures = function() {
@@ -124,7 +132,7 @@
       if (outerWidth > this.options.ratio * outerHeight) {
         min = outerHeight;
         paddingV = this.options.minPadding;
-        this.$ruban.parent().css('font-size', "" + (min * 0.4) + "%");
+        this.$ruban.parent().css('font-size', "" + (min * this.options.fontRatio) + "%");
         this.$sections.css({
           'padding-top': paddingV,
           'padding-bottom': paddingV
@@ -139,7 +147,7 @@
       } else {
         min = outerWidth / this.options.ratio;
         paddingH = this.options.minPadding;
-        this.$ruban.parent().css('font-size', "" + (min * 0.4) + "%");
+        this.$ruban.parent().css('font-size', "" + (min * this.options.fontRatio) + "%");
         this.$sections.css({
           'padding-left': paddingH,
           'padding-right': paddingH
@@ -207,6 +215,10 @@
       } else {
         return this.prevSlide();
       }
+    };
+
+    Ruban.prototype.toggleDetails = function() {
+      return this.$current.find('details').toggleClass('opened');
     };
 
     Ruban.prototype.last = function() {

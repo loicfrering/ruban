@@ -1,6 +1,6 @@
 html,
 body {
-  font-size: 13pt;
+  font-size: 13pt !important;
   width: auto;
   height: auto;
   border: 0;
@@ -34,7 +34,12 @@ section {
 }
 section details {
   display: block;
+  opacity: 1;
   border-top: 2px solid;
+}
+.step,
+.steps > * {
+  display: inherit !important;
 }
 .pagination {
   display: none;
