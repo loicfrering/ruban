@@ -23,7 +23,6 @@
       this.bind();
       this.$ruban.css('transition-property', 'transform');
       this.$ruban.css('-webkit-transition-property', '-webkit-transform');
-      this.$ruban.css('transition-duration', this.options.transitionDuration);
       setTimeout(function() {
         return _this.checkHash();
       }, 250);
@@ -166,7 +165,9 @@
       var hash, slide;
       hash = window.location.hash;
       if (slide = hash.substr(2)) {
-        return this.go(slide);
+        return this.go(slide, {
+          immediate: true
+        });
       }
     };
 
@@ -302,7 +303,7 @@
       if ($section.length && (options.force || !$section.is(this.$current))) {
         this.checkSteps($section, options.direction);
         this.navigate($section);
-        this.translate($section);
+        this.translate($section, options.immediate);
         this.current($section);
         return this.pagination();
       }
@@ -312,13 +313,17 @@
       return window.location.hash = "/" + ($section.attr('id') || $section.index() + 1);
     };
 
-    Ruban.prototype.translate = function($section) {
+    Ruban.prototype.translate = function($section, immediate) {
       var y;
+      if (immediate == null) {
+        immediate = false;
+      }
       y = $section.prevAll().map(function() {
         return $(this).outerHeight();
       }).get().reduce(function(memo, height) {
         return memo + height;
       }, 0);
+      this.$ruban.css('transition-duration', immediate ? 0 : this.options.transitionDuration);
       return this.$ruban.css('transform', "translateY(-" + y + "px)");
     };
 

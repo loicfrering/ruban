@@ -12,7 +12,6 @@ class Ruban
     @bind()
     @$ruban.css('transition-property', 'transform')
     @$ruban.css('-webkit-transition-property', '-webkit-transform')
-    @$ruban.css('transition-duration', @options.transitionDuration)
     setTimeout(=>
       @checkHash()
     , 250)
@@ -112,7 +111,7 @@ class Ruban
   checkHash: =>
     hash = window.location.hash
     if slide = hash.substr(2)
-      @go(slide)
+      @go(slide, {immediate: true})
 
   highlight: ->
     hljs.initHighlightingOnLoad()
@@ -202,21 +201,21 @@ class Ruban
     if $section.length and (options.force or not $section.is(@$current))
       @checkSteps($section, options.direction)
       @navigate($section)
-      @translate($section)
+      @translate($section, options.immediate)
       @current($section)
       @pagination()
 
   navigate: ($section) ->
     window.location.hash = "/#{$section.attr('id') || $section.index() + 1}"
 
-  translate: ($section) ->
+  translate: ($section, immediate = false) ->
     y = $section.prevAll().map(->
       $(@).outerHeight()
     ).get().reduce((memo, height) ->
       memo + height
     , 0)
+    @$ruban.css('transition-duration', if immediate then 0 else @options.transitionDuration)
     @$ruban.css('transform', "translateY(-#{y}px)")
-
 
   current: ($section) ->
     @$current.removeClass('active').trigger('inactive') if @$current?
