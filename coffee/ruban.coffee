@@ -72,6 +72,12 @@ class Ruban
   bindHashChange: ->
     $(window).on('hashchange', @checkHash)
 
+  disableTransitions: ->
+    @$ruban.css('transition-property', 'none')
+
+  enableTransitions: ->
+    @$ruban.css('transition-property', 'transform')
+
   resize: ->
     [outerWidth, outerHeight] = [$(window).width(), $(window).height()]
     if outerWidth > @options.ratio * outerHeight
