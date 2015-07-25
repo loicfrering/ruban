@@ -222,9 +222,10 @@ class Ruban
 
 
   current: ($section) ->
-    @$current.removeClass('active').trigger('inactive') if @$current?
-    $section.addClass('active').trigger('active')
+    $prev = @$current
     @$current = $section
+    $prev.removeClass('active').trigger('inactive') if $prev?
+    @$current.addClass('active').trigger('active')
 
   pagination: ->
     @paginationText = []
