@@ -164,6 +164,9 @@ class Ruban
   isLastSlide: ->
     @$current.is(@getLastSlide())
 
+  isLastStep: ->
+    not @hasSteps() or @index is @$steps.length - 1
+
   next: =>
     if @hasSteps()
       @nextStep()
