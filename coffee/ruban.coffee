@@ -117,8 +117,13 @@ class Ruban
     @firstSlide()
 
   firstSlide: ->
-    $first = @$current.prevAll('section:first-child')
-    @go($first, direction: 'backward')
+    @go(@getFirstSlide(), direction: 'backward')
+
+  getFirstSlide: ->
+    @$sections.first()
+
+  isFirstSlide: ->
+    @$current.is(@getFirstSlide())
 
   prev: =>
     if @hasSteps()
@@ -145,8 +150,13 @@ class Ruban
     @lastSlide()
 
   lastSlide: ->
-    $last = @$current.nextAll('section:last-child')
-    @go($last, direction: 'forward')
+    @go(@getLastSlide(), direction: 'forward')
+
+  getLastSlide: ->
+    @$sections.last()
+
+  isLastSlide: ->
+    @$current.is(@getLastSlide())
 
   next: =>
     if @hasSteps()
