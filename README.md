@@ -11,6 +11,12 @@ You'll find the documentation on a Ruban: http://loicfrering.github.io/ruban/.
 Changelog
 ---------
 
+### 0.4.0
+
+* Add `fontRatio` attribute
+* Add to 'c' shortcut to toggle comments on screen version
+* Fix some bugs in printed css
+
 ### 0.3.1
 
 * Add `first()` and `last()` functions to go to the first and last slide.

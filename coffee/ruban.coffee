@@ -7,13 +7,14 @@ class Ruban
     @toc()
     @current(@$sections.first())
     @pagination()
-    @checkHash()
     @highlight()
     @resize()
     @bind()
     @$ruban.css('transition-property', 'transform')
     @$ruban.css('-webkit-transition-property', '-webkit-transform')
-    @$ruban.css('transition-duration', @options.transitionDuration)
+    setTimeout(=>
+      @checkHash()
+    , 250)
 
   initOptions: () ->
     @options.ratio              ?= 4/3
@@ -24,6 +25,7 @@ class Ruban
     @options.stripHtmlInToc     ?= false
     @options.bindClicks         ?= false
     @options.bindMouseWheel     ?= false
+    @options.fontRatio          ?= 0.4
 
   bind: ->
     @bindKeys()
@@ -39,6 +41,7 @@ class Ruban
     key('left, up, backspace, k, h, pageup', @prev)
     key('home', @first)
     key('last', @last)
+    key('c', @toggleDetails)
 
   bindGestures: ->
     Hammer(document, {
@@ -83,7 +86,7 @@ class Ruban
     if outerWidth > @options.ratio * outerHeight
       min = outerHeight
       paddingV = @options.minPadding
-      @$ruban.parent().css('font-size', "#{min * 0.4}%")
+      @$ruban.parent().css('font-size', "#{min * @options.fontRatio}%")
       @$sections.css(
         'padding-top':    paddingV,
         'padding-bottom': paddingV
@@ -98,7 +101,7 @@ class Ruban
     else
       min = outerWidth / @options.ratio
       paddingH = @options.minPadding
-      @$ruban.parent().css('font-size', "#{min * 0.4}%")
+      @$ruban.parent().css('font-size', "#{min * @options.fontRatio}%")
       @$sections.css(
         'padding-left':  paddingH,
         'padding-right': paddingH
@@ -114,7 +117,7 @@ class Ruban
   checkHash: =>
     hash = window.location.hash
     if slide = hash.substr(2)
-      @go(slide)
+      @go(slide, {immediate: true})
 
   highlight: ->
     hljs.initHighlightingOnLoad()
@@ -151,6 +154,9 @@ class Ruban
         @prevStep()
     else
       @prevSlide()
+
+  toggleDetails: =>
+    @$current.find('details').toggleClass 'opened'
 
   last: =>
     @lastSlide()
@@ -214,21 +220,21 @@ class Ruban
     if $section.length and (options.force or not $section.is(@$current))
       @checkSteps($section, options.direction)
       @navigate($section)
-      @translate($section)
+      @translate($section, options.immediate)
       @current($section)
       @pagination()
 
   navigate: ($section) ->
     window.location.hash = "/#{$section.attr('id') || $section.index() + 1}"
 
-  translate: ($section) ->
+  translate: ($section, immediate = false) ->
     y = $section.prevAll().map(->
       $(@).outerHeight()
     ).get().reduce((memo, height) ->
       memo + height
     , 0)
+    @$ruban.css('transition-duration', if immediate then 0 else @options.transitionDuration)
     @$ruban.css('transform', "translateY(-#{y}px)")
-
 
   current: ($section) ->
     $prev = @$current

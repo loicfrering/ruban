@@ -18,6 +18,8 @@ html, body {
 
 section {
   display: table;
+  position: relative;
+  z-index: 0;
   -moz-box-sizing: border-box;
        box-sizing: border-box;
   height: 100%;
@@ -40,7 +42,32 @@ section {
   }
 
   details {
-    display:none;
+    transition: bottom .5s;
+    opacity: 0;
+    bottom: -100%;
+
+    summary::-webkit-details-marker {
+      display: none
+    }
+
+    p {
+      margin: 0 0 .5em 0;
+    }
+  }
+
+  details.opened {
+    position: absolute;
+    z-index: 1;
+    opacity: 1;
+    bottom: 10px;
+    right: 10px;
+    left: 10px;
+    max-height: 75%;
+    overflow: auto;
+    background: #EEE;
+    box-shadow: 0 0 4px #434343;
+    padding: .5em 1.5em;
+    font-size: 60%;
   }
 }
 
@@ -91,4 +118,8 @@ code {
     background: #ddd;
     font-weight: 600;
   }
+}
+
+.hidden {
+  display: none;
 }
