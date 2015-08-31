@@ -11,6 +11,12 @@ You'll find the documentation on a Ruban: http://loicfrering.github.io/ruban/.
 Changelog
 ---------
 
+### 0.3.2
+
+* Add additional functions to allow Ruban's support in
+  [deck2pdf](https://github.com/melix/deck2pdf) which can convert HTML5
+  presentations to PDF (thanks @jnizet).
+
 ### 0.3.1
 
 * Add `first()` and `last()` functions to go to the first and last slide.
