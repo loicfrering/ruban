@@ -118,6 +118,14 @@
       return $(window).on('hashchange', this.checkHash);
     };
 
+    Ruban.prototype.disableTransitions = function() {
+      return this.$ruban.css('transition-property', 'none');
+    };
+
+    Ruban.prototype.enableTransitions = function() {
+      return this.$ruban.css('transition-property', 'transform');
+    };
+
     Ruban.prototype.resize = function() {
       var height, min, outerHeight, outerWidth, paddingH, paddingV, width, _ref;
       _ref = [$(window).width(), $(window).height()], outerWidth = _ref[0], outerHeight = _ref[1];
@@ -171,11 +179,17 @@
     };
 
     Ruban.prototype.firstSlide = function() {
-      var $first;
-      $first = this.$current.prevAll('section:first-child');
-      return this.go($first, {
+      return this.go(this.getFirstSlide(), {
         direction: 'backward'
       });
+    };
+
+    Ruban.prototype.getFirstSlide = function() {
+      return this.$sections.first();
+    };
+
+    Ruban.prototype.isFirstSlide = function() {
+      return this.$current.is(this.getFirstSlide());
     };
 
     Ruban.prototype.prev = function() {
@@ -214,11 +228,21 @@
     };
 
     Ruban.prototype.lastSlide = function() {
-      var $last;
-      $last = this.$current.nextAll('section:last-child');
-      return this.go($last, {
+      return this.go(this.getLastSlide(), {
         direction: 'forward'
       });
+    };
+
+    Ruban.prototype.getLastSlide = function() {
+      return this.$sections.last();
+    };
+
+    Ruban.prototype.isLastSlide = function() {
+      return this.$current.is(this.getLastSlide());
+    };
+
+    Ruban.prototype.isLastStep = function() {
+      return !this.hasSteps() || this.index === this.$steps.length - 1;
     };
 
     Ruban.prototype.next = function() {
@@ -311,11 +335,13 @@
     };
 
     Ruban.prototype.current = function($section) {
-      if (this.$current != null) {
-        this.$current.removeClass('active').trigger('inactive');
+      var $prev;
+      $prev = this.$current;
+      this.$current = $section;
+      if ($prev != null) {
+        $prev.removeClass('active').trigger('inactive');
       }
-      $section.addClass('active').trigger('active');
-      return this.$current = $section;
+      return this.$current.addClass('active').trigger('active');
     };
 
     Ruban.prototype.pagination = function() {

@@ -72,6 +72,12 @@ class Ruban
   bindHashChange: ->
     $(window).on('hashchange', @checkHash)
 
+  disableTransitions: ->
+    @$ruban.css('transition-property', 'none')
+
+  enableTransitions: ->
+    @$ruban.css('transition-property', 'transform')
+
   resize: ->
     [outerWidth, outerHeight] = [$(window).width(), $(window).height()]
     if outerWidth > @options.ratio * outerHeight
@@ -117,8 +123,13 @@ class Ruban
     @firstSlide()
 
   firstSlide: ->
-    $first = @$current.prevAll('section:first-child')
-    @go($first, direction: 'backward')
+    @go(@getFirstSlide(), direction: 'backward')
+
+  getFirstSlide: ->
+    @$sections.first()
+
+  isFirstSlide: ->
+    @$current.is(@getFirstSlide())
 
   prev: =>
     if @hasSteps()
@@ -145,8 +156,16 @@ class Ruban
     @lastSlide()
 
   lastSlide: ->
-    $last = @$current.nextAll('section:last-child')
-    @go($last, direction: 'forward')
+    @go(@getLastSlide(), direction: 'forward')
+
+  getLastSlide: ->
+    @$sections.last()
+
+  isLastSlide: ->
+    @$current.is(@getLastSlide())
+
+  isLastStep: ->
+    not @hasSteps() or @index is @$steps.length - 1
 
   next: =>
     if @hasSteps()
@@ -212,9 +231,10 @@ class Ruban
 
 
   current: ($section) ->
-    @$current.removeClass('active').trigger('inactive') if @$current?
-    $section.addClass('active').trigger('active')
+    $prev = @$current
     @$current = $section
+    $prev.removeClass('active').trigger('inactive') if $prev?
+    @$current.addClass('active').trigger('active')
 
   pagination: ->
     @paginationText = []
